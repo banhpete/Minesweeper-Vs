@@ -3,6 +3,10 @@ body {
   font-family: 'Ubuntu', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  box-sizing: border-box;
   color:#707070
+}
+
+a{
+  text-decoration:none;
+  color:#707070;
 }
