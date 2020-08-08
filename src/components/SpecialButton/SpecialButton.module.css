@@ -1,0 +1,35 @@
+.Button{
+  position:relative;
+  background:white;
+  z-index:2;
+}
+
+.Button:hover{
+  color:white;
+  background:red;
+  cursor:pointer;
+}
+
+.Button:active{
+  background: darkred;
+}
+
+.popup{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index:0;
+  position:relative;
+  margin: 0 auto;
+  border: 1px solid black;
+  overflow:hidden;
+  transform-origin:top;
+}
+
+.open{
+  transition: height 0.2s ease-in, top 0.1s ease-in 0.21s;
+}
+
+.close{
+  transition: height 0.2s ease-in 0.1s, top 0.1s ease-in 0s;
+}

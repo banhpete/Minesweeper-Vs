@@ -1,0 +1,41 @@
+.HomePage{
+  display:flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.title1{
+  font-size:30px;
+  text-align:center;
+  margin: 25px 0px 5px 0;
+}
+
+.title2{
+  font-size:20px;
+  text-align:center;
+  margin:0px;
+}
+
+.subtitle{
+  margin:0 0 5px 0;
+}
+
+.title3{
+  font-size:20px;
+  text-align:center;
+  margin:0 0 5px 0;
+}
+
+.authContainer{
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  margin:20px 0;
+}
+
+.menuContainer{
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  margin:10px 0;
+}

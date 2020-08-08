@@ -1,0 +1,13 @@
+.Button{
+  background:white;
+}
+
+.Button:hover{
+  color:white;
+  background:red;
+  cursor:pointer;
+}
+
+.Button:active{
+  background: darkred;
+}
