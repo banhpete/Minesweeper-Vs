@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import SpecialButtonStyle from './SpecialButton.module.css'
 
 const SpecialButton = (props) => {

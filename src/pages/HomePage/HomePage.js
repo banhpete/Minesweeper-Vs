@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import HomePageStyles from './HomePage.module.css'
 import Button from "../../components/Button/Button"
 import SpecialButton from '../../components/SpecialButton/SpecialButton';
+import GameTitle from '../../components/GameTitle/GameTitle';
 
 const HomePage = () => {
   const [specialButtonsState, setSpecialButtonsState] = useState([false, false, false])
@@ -19,15 +20,14 @@ const HomePage = () => {
 
   return (
     <div onClick={(e) => { e.stopPropagation(); changeButtonState() }} className={HomePageStyles.HomePage}>
-      <h2 className={HomePageStyles.title1}>Minesweeper Vs.</h2>
-      <h3 className={HomePageStyles.title2}>Online Minesweeper Multiplayer</h3>
+      <GameTitle />
       <div className={HomePageStyles.authContainer}>
-        <p className={HomePageStyles.subtitle}>Currently Playing as Anonymous Mine Sweeper 13</p>
+        <p className={HomePageStyles.authTitle}>Currently Playing as Anonymous Mine Sweeper 13</p>
         <Link to="/Login"><Button height={25} width={113} margin={3} fontSize={14}>Log In</Button></Link>
         <Link to="/Signup"><Button height={25} width={113} margin={3} fontSize={14}>Sign Up</Button></Link>
       </div>
       <div className={HomePageStyles.menuContainer}>
-        <h4 className={HomePageStyles.title3}>Pick a Game Mode</h4>
+        <h4 className={HomePageStyles.menuTitle}>Pick a Game Mode</h4>
         <Button height={50} width={300} margin={10} fontSize={18}>Classic Minesweeper (1P)</Button>
         <SpecialButton
           height={50}
