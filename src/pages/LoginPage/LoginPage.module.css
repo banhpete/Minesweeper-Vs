@@ -17,7 +17,7 @@
 
 .windowTitle{
   font-size:20px;
-  margin: 0 0 20px 0;
+  margin: 0 0 0 0;
 }
 
 .windowSubTitle{
@@ -29,4 +29,23 @@
   text-align:right;
   margin:2px 0 0 0;
   font-size:14px;
+}
+
+.cancel{
+  padding:0px;
+  padding-top:5px;
+  font-size:14px;
+  display:flex;
+  justify-content: center;
+}
+
+.cancel a:hover{
+  color:blue;
+}
+
+.error{
+  color:red;
+  font-size: 16px;
+  text-align:center;
+  margin: 10px 0 0 0;
 }

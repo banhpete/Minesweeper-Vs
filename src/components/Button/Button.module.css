@@ -12,3 +12,7 @@
 .Button:active{
   background: darkred;
 }
+
+.Button:disabled{
+  background:rgb(146, 146, 146);
+}
