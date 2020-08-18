@@ -23,8 +23,8 @@ const HomePage = () => {
       <GameTitle />
       <div className={HomePageStyles.authContainer}>
         <p className={HomePageStyles.authTitle}>Currently Playing as Anonymous Mine Sweeper 13</p>
-        <Link to="/login"><Button height={25} width={113} margin={3} fontSize={14}>Log In</Button></Link>
-        <Link to="/createaccount"><Button height={25} width={113} margin={3} fontSize={14}>Create Account</Button></Link>
+        <Link to="/user/login"><Button height={25} width={113} margin={3} fontSize={14}>Log In</Button></Link>
+        <Link to="/user/create"><Button height={25} width={113} margin={3} fontSize={14}>Create Account</Button></Link>
       </div>
       <div className={HomePageStyles.menuContainer}>
         <h4 className={HomePageStyles.menuTitle}>Pick a Game Mode</h4>

@@ -13,8 +13,8 @@ function App() {
       <Header />
       <div className={AppStyles.displayContainer}>
         <Switch>
-          <Route path="/login" render={(props) => <UserLoginPage />} />
-          <Route path="/createaccount" render={(props) => <UserCreatePage />} />
+          <Route exact path="/user/login" render={(props) => <UserLoginPage />} />
+          <Route exact path="/user/create" render={(props) => <UserCreatePage />} />
           <Route path="/" render={(props) => <HomePage />} />
         </Switch>
       </div>
