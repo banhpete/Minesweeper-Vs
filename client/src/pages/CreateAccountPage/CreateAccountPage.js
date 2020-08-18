@@ -21,6 +21,21 @@ class CreateAccountPage extends Component {
     })
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault()
+    console.log()
+
+    if (this.state.password !== this.state.passwordConfirm) {
+      this.setState({
+        errMsg: "Please ensure your passwords are matching"
+      })
+    } else if (this.state.email !== this.state.emailConfirm) {
+      this.setState({
+        errMsg: "Please ensure your emails are matching"
+      })
+    }
+  }
+
   render() {
     const errMsg = this.state.errMsg ?
       <p className={`${CreateAccountPageStyles.windowSubTitle} ${CreateAccountPageStyles.error} `}>{this.state.errMsg}</p> :
@@ -29,7 +44,7 @@ class CreateAccountPage extends Component {
     return (
       <div className={CreateAccountPageStyles.Page}>
         <GameTitle />
-        <div className={CreateAccountPageStyles.window}>
+        <form onSubmit={this.handleSubmit} className={CreateAccountPageStyles.window}>
           <h2 className={CreateAccountPageStyles.windowTitle}>Create Account</h2>
           <p className={CreateAccountPageStyles.windowSubTitle}>Username:</p>
           <TypingInput handleChange={this.handleChange} name="username" value={this.state.username} type="text" />
@@ -46,7 +61,7 @@ class CreateAccountPage extends Component {
           <div className={CreateAccountPageStyles.cancel}>
             <Link to='/'>Cancel Log In</Link>
           </div>
-        </div>
+        </form>
       </div>
     );
   }
