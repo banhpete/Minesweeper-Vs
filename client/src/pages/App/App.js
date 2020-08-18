@@ -4,8 +4,8 @@ import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer';
 import AppStyles from './App.module.css'
 import HomePage from '../HomePage/HomePage';
-import LoginPage from '../LoginPage/LoginPage';
-import CreateAccountPage from '../CreateAccountPage/CreateAccountPage';
+import UserLoginPage from '../UserPages/UserLoginPage/UserLoginPage';
+import UserCreatePage from '../UserPages/UserCreatePage/UserCreatePage';
 
 function App() {
   return (
@@ -13,8 +13,8 @@ function App() {
       <Header />
       <div className={AppStyles.displayContainer}>
         <Switch>
-          <Route path="/login" render={(props) => <LoginPage />} />
-          <Route path="/createaccount" render={(props) => <CreateAccountPage />} />
+          <Route path="/login" render={(props) => <UserLoginPage />} />
+          <Route path="/createaccount" render={(props) => <UserCreatePage />} />
           <Route path="/" render={(props) => <HomePage />} />
         </Switch>
       </div>
