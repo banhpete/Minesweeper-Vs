@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom'
 import HomePageStyles from './HomePage.module.css'
 import Button from "../../components/Button/Button"
 import SpecialButton from '../../components/SpecialButton/SpecialButton';
 import GameTitle from '../../components/GameTitle/GameTitle';
+import { UserContext } from '../../contexts/UserContext';
 
 const HomePage = () => {
   const [specialButtonsState, setSpecialButtonsState] = useState([false, false, false])
@@ -18,13 +19,27 @@ const HomePage = () => {
     setSpecialButtonsState(newArr)
   }
 
+  const { username, userLogoff } = useContext(UserContext)
+
+  const test = () => {
+    console.log('hi')
+  }
+
   return (
     <div onClick={(e) => { e.stopPropagation(); changeButtonState() }} className={HomePageStyles.HomePage}>
       <GameTitle />
       <div className={HomePageStyles.authContainer}>
-        <p className={HomePageStyles.authTitle}>Currently Playing as Anonymous Mine Sweeper 13</p>
-        <Link to="/user/login"><Button height={25} width={113} margin={3} fontSize={14}>Log In</Button></Link>
-        <Link to="/user/create"><Button height={25} width={113} margin={3} fontSize={14}>Create Account</Button></Link>
+        {username ?
+          <>
+            <p className={HomePageStyles.authTitle}>Currently Playing as {username}</p>
+            <Button height={25} width={113} margin={"3px 3px 34px 3px"} fontSize={14} onClick={userLogoff}>Log Off</Button>
+          </> :
+          <>
+            <p className={HomePageStyles.authTitle}>Currently Playing as Anonymous Mine Sweeper</p>
+            <Link to="/user/login"><Button height={25} width={113} margin={3} fontSize={14}>Log In</Button></Link>
+            <Link to="/user/create"><Button height={25} width={113} margin={3} fontSize={14}>Create Account</Button></Link>
+          </>
+        }
       </div>
       <div className={HomePageStyles.menuContainer}>
         <h4 className={HomePageStyles.menuTitle}>Pick a Game Mode</h4>

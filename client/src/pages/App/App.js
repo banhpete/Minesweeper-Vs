@@ -6,19 +6,22 @@ import AppStyles from './App.module.css'
 import HomePage from '../HomePage/HomePage';
 import UserLoginPage from '../UserPages/UserLoginPage/UserLoginPage';
 import UserCreatePage from '../UserPages/UserCreatePage/UserCreatePage';
+import UserContextProvider from '../../contexts/UserContext';
 
 function App() {
   return (
     <div className={AppStyles.App}>
-      <Header />
-      <div className={AppStyles.displayContainer}>
-        <Switch>
-          <Route exact path="/user/login" render={(props) => <UserLoginPage />} />
-          <Route exact path="/user/create" render={(props) => <UserCreatePage />} />
-          <Route path="/" render={(props) => <HomePage />} />
-        </Switch>
-      </div>
-      <Footer />
+      <UserContextProvider>
+        <Header />
+        <div className={AppStyles.displayContainer}>
+          <Switch>
+            <Route exact path="/user/login" render={(props) => <UserLoginPage {...props} />} />
+            <Route exact path="/user/create" render={(props) => <UserCreatePage {...props} />} />
+            <Route path="/" render={(props) => <HomePage />} />
+          </Switch>
+        </div>
+        <Footer />
+      </UserContextProvider>
     </div>
   );
 }
