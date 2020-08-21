@@ -10,7 +10,7 @@ const Button = (props) => {
   }
 
   return (
-    <button className={ButtonStyle.Button} style={buttonStyle}>{props.children}</button>
+    <button className={ButtonStyle.Button} style={buttonStyle} disabled={props.loading} onClick={props.onClick}>{props.children}</button>
   );
 }
 
