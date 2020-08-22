@@ -26,4 +26,20 @@ async function userCreate({ username, password, email }) {
   return responseData
 }
 
-export { userGet, userLogoff, userCreate }
+async function userLogin({ username, password }) {
+  const response = await fetch(BASE_URL + '/signin', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ username, password })
+  })
+  const responseData = await response.json()
+
+  if (!responseData.error) {
+    tokenSet(responseData.token)
+  }
+  return responseData
+}
+
+export { userGet, userLogoff, userCreate, userLogin }

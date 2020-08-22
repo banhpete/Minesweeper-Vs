@@ -11,7 +11,6 @@ class UserContextProvider extends React.Component {
   }
 
   userLogoff = () => {
-    console.log('hi')
     userLogoff()
     this.setState({ username: "" })
   }
