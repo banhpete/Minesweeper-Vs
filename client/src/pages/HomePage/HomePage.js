@@ -21,10 +21,6 @@ const HomePage = () => {
 
   const { username, userLogoff } = useContext(UserContext)
 
-  const test = () => {
-    console.log('hi')
-  }
-
   return (
     <div onClick={(e) => { e.stopPropagation(); changeButtonState() }} className={HomePageStyles.HomePage}>
       <GameTitle />
