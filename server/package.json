@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "nodemon socketServer.js",
     "migrate": "./node_modules/.bin/node-pg-migrate"
   },
   "author": "",
@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "node-pg-migrate": "^5.5.1",
-    "pg": "^8.3.2"
+    "pg": "^8.3.2",
+    "socket.io": "^2.3.0"
   }
 }

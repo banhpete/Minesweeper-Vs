@@ -7,20 +7,23 @@ import HomePage from '../HomePage/HomePage';
 import UserLoginPage from '../UserPages/UserLoginPage/UserLoginPage';
 import UserCreatePage from '../UserPages/UserCreatePage/UserCreatePage';
 import UserContextProvider from '../../contexts/UserContext';
+import SocketContextProvider from '../../contexts/SocketContext';
 
 function App() {
   return (
     <div className={AppStyles.App}>
       <UserContextProvider>
-        <Header />
-        <div className={AppStyles.displayContainer}>
-          <Switch>
-            <Route exact path="/user/login" render={(props) => <UserLoginPage {...props} />} />
-            <Route exact path="/user/create" render={(props) => <UserCreatePage {...props} />} />
-            <Route path="/" render={(props) => <HomePage />} />
-          </Switch>
-        </div>
-        <Footer />
+        <SocketContextProvider>
+          <Header />
+          <div className={AppStyles.displayContainer}>
+            <Switch>
+              <Route exact path="/user/login" render={(props) => <UserLoginPage {...props} />} />
+              <Route exact path="/user/create" render={(props) => <UserCreatePage {...props} />} />
+              <Route path="/" render={(props) => <HomePage />} />
+            </Switch>
+          </div>
+          <Footer />
+        </SocketContextProvider>
       </UserContextProvider>
     </div>
   );
