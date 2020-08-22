@@ -22,7 +22,13 @@ const SpecialButton = (props) => {
 
   return (
     <div className={SpecialButtonStyle.container} style={containerStyle}>
-      <button onClick={(e) => { e.stopPropagation(); props.changeButtonState(props.index) }} className={SpecialButtonStyle.Button} style={specialButtonStyle}>{props.children}</button>
+      <button
+        onClick={(e) => { e.stopPropagation(); props.changeButtonState(props.index) }}
+        className={SpecialButtonStyle.Button}
+        style={specialButtonStyle}
+        disabled={props.loading}>
+        {props.children}
+      </button>
       <div
         style={popupStyle}
         className={props.menuToggle ? `${SpecialButtonStyle.popup} ${SpecialButtonStyle.close}` : `${SpecialButtonStyle.popup} ${SpecialButtonStyle.open}`}>

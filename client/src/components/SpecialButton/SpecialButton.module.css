@@ -14,6 +14,17 @@
   background: darkred;
 }
 
+.Button:disabled{
+  cursor:default;
+  background:rgb(146, 146, 146);
+}
+
+.Button:disabled:hover{
+  color:#707070;
+  background:rgb(146, 146, 146);
+}
+
+
 .popup{
   display:flex;
   flex-direction: column;
