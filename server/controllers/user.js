@@ -75,16 +75,13 @@ async function userLogin(req, res, next) {
     const query = "SELECT username, password FROM users WHERE username=$1"
     const values = [req.body.username]
     user = await psqlClient.query(query, values)
-    console.log('queryResults', user)
   } catch (error) {
-    console.log('queryError', error)
     return next(error)
   }
 
   // Check username/passwords
   if (user.rows.length > 0) {
     const match = await bcrypt.compare(req.body.password, user.rows[0].password);
-    console.log('passMatch', match)
     if (match) {
       const token = createJWT(req.body.username);
       return res.json({ token })
