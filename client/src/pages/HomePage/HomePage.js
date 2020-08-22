@@ -8,6 +8,9 @@ import { UserContext } from '../../contexts/UserContext';
 
 const HomePage = () => {
   const [specialButtonsState, setSpecialButtonsState] = useState([false, false, false])
+  const [loading, setLoading] = useState(false)
+  const [userMsg, setUserMsg] = useState("Currently Playing as Anonymous Mine Sweeper")
+  const { username, userLogoff } = useContext(UserContext)
 
   const changeButtonState = (index = null) => {
     let newArr = [false, false, false]
@@ -19,7 +22,10 @@ const HomePage = () => {
     setSpecialButtonsState(newArr)
   }
 
-  const { username, userLogoff } = useContext(UserContext)
+  const userLogoffFreeze = () => {
+    setLoading(true)
+    setTimeout(() => { userLogoff(); setUserMsg(`You have logged off ${username}`); return setLoading(false) }, 500)
+  }
 
   return (
     <div onClick={(e) => { e.stopPropagation(); changeButtonState() }} className={HomePageStyles.HomePage}>
@@ -28,10 +34,10 @@ const HomePage = () => {
         {username ?
           <>
             <p className={HomePageStyles.authTitle}>Currently Playing as {username}</p>
-            <Button height={25} width={113} margin={"3px 3px 34px 3px"} fontSize={14} onClick={userLogoff}>Log Off</Button>
+            <Button height={25} width={113} margin={"3px 3px 34px 3px"} fontSize={14} onClick={userLogoffFreeze} loading={loading}>Log Off</Button>
           </> :
           <>
-            <p className={HomePageStyles.authTitle}>Currently Playing as Anonymous Mine Sweeper</p>
+            <p className={HomePageStyles.authTitle}>{userMsg}</p>
             <Link to="/user/login"><Button height={25} width={113} margin={3} fontSize={14}>Log In</Button></Link>
             <Link to="/user/create"><Button height={25} width={113} margin={3} fontSize={14}>Create Account</Button></Link>
           </>
@@ -39,7 +45,7 @@ const HomePage = () => {
       </div>
       <div className={HomePageStyles.menuContainer}>
         <h4 className={HomePageStyles.menuTitle}>Pick a Game Mode</h4>
-        <Button height={50} width={300} margin={10} fontSize={18}>Classic Minesweeper (1P)</Button>
+        <Button height={50} width={300} margin={10} fontSize={18} loading={loading}>Classic Minesweeper (1P)</Button>
         <SpecialButton
           height={50}
           width={300}
@@ -49,6 +55,7 @@ const HomePage = () => {
           menuToggle={specialButtonsState[0]}
           index={0}
           changeButtonState={changeButtonState}
+          loading={loading}
           components={
             <>
               <Button height={35} width={175} margin='auto' fontsize={16}>Challenge Random Player</Button>
@@ -66,6 +73,7 @@ const HomePage = () => {
           menuToggle={specialButtonsState[1]}
           index={1}
           changeButtonState={changeButtonState}
+          loading={loading}
           components={
             <>
               <Button height={35} width={175} margin='auto' fontsize={16}>Challenge Random Player</Button>
@@ -83,6 +91,7 @@ const HomePage = () => {
           menuToggle={specialButtonsState[2]}
           index={2}
           changeButtonState={changeButtonState}
+          loading={loading}
           components={
             <>
               <Button height={35} width={175} margin='auto' fontsize={16}>Challenge Random Player</Button>
