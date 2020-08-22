@@ -24,7 +24,7 @@ const HomePage = () => {
 
   const userLogoffFreeze = () => {
     setLoading(true)
-    setTimeout(() => { userLogoff(); setUserMsg(`You have logged off ${username}`); return setLoading(false) }, 500)
+    setTimeout(() => { userLogoff(); setUserMsg(`You have logged off ${username}`); return setLoading(false) }, 150)
   }
 
   return (
