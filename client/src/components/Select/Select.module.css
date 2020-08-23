@@ -1,0 +1,10 @@
+.Container{
+  display:flex;
+  flex-direction: column;
+}
+
+.Select{
+  margin-top:5px;
+  padding:3px;
+  background:white;
+}
