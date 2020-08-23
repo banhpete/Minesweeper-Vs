@@ -1,0 +1,6 @@
+.Square{
+  border:1px solid black;
+  width:600px;
+  display:flex;
+  flex-wrap: wrap;
+}

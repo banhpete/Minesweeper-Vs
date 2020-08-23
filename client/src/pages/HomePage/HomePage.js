@@ -59,7 +59,7 @@ const HomePage = () => {
       </div>
       <div className={HomePageStyles.menuContainer}>
         <h4 className={HomePageStyles.menuTitle}>Pick a Game Mode</h4>
-        <Button height={50} width={300} margin={10} fontSize={18} loading={loading}>Classic Minesweeper (1P)</Button>
+        <Link to="/game/classic"><Button height={50} width={300} margin={10} fontSize={18} loading={loading}>Classic Minesweeper (1P)</Button></Link>
         <SpecialButton
           height={50}
           width={300}
@@ -115,7 +115,7 @@ const HomePage = () => {
           Minehunter Galore (2P)
         </SpecialButton>
       </div>
-    </div>
+    </div >
   );
 }
 

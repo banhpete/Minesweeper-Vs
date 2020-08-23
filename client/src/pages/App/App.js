@@ -8,8 +8,12 @@ import UserLoginPage from '../UserPages/UserLoginPage/UserLoginPage';
 import UserCreatePage from '../UserPages/UserCreatePage/UserCreatePage';
 import UserContextProvider from '../../contexts/UserContext';
 import SocketContextProvider from '../../contexts/SocketContext';
+import { userGet } from "../../utils/userServices"
+import ClassicGamePage from '../GamePages/ClassicGamePage/ClassicGamePage';
 
 function App() {
+
+
   return (
     <div className={AppStyles.App}>
       <UserContextProvider>
@@ -17,8 +21,9 @@ function App() {
           <Header />
           <div className={AppStyles.displayContainer}>
             <Switch>
-              <Route exact path="/user/login" render={(props) => <UserLoginPage {...props} />} />
-              <Route exact path="/user/create" render={(props) => <UserCreatePage {...props} />} />
+              <Route exact path="/user/login" render={(props) => (!userGet() ? <UserLoginPage {...props} /> : <HomePage />)} />
+              <Route exact path="/user/create" render={(props) => (!userGet() ? <UserCreatePage {...props} /> : <HomePage />)} />
+              <Route exact path="/game/classic" render={(props) => <ClassicGamePage />} />
               <Route path="/" render={(props) => <HomePage />} />
             </Switch>
           </div>

@@ -1,0 +1,19 @@
+.ClassicGamePage{
+  position: relative;
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center; 
+  height:100%;
+}
+
+.Header{
+  box-sizing: border-box;
+  border:2px solid black;
+  height:60px;
+  width:602px;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding:0 10px;
+}
