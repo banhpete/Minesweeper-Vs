@@ -11,12 +11,9 @@ const Select = (props) => {
   })
 
   return (
-    <div className={SelectStyles.Container} style={{ ...props.style }}>
-      <label>Game Difficulty</label>
-      <select defaultValue={props.initial ? props.initial : null} onChange={props.handleChange} className={SelectStyles.Select}>
-        {options}
-      </select>
-    </div>
+    <select defaultValue={props.initial ? props.initial : null} onChange={props.handleChange} className={SelectStyles.Select}>
+      {options}
+    </select>
   );
 }
 
