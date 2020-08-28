@@ -18,5 +18,9 @@
 }
 
 .Unopened{
-  background:#6d6b6b;
+  background:rgb(136, 136, 136);
+  border-width:5px;
+  border-style:solid;
+  border-color: rgb(220, 220, 220) rgb(51, 51, 51) rgb(51, 51, 51) rgb(220, 220, 220);
+
 }
