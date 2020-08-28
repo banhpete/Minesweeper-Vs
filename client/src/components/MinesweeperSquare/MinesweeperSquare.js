@@ -8,9 +8,10 @@ const MinesweeperSquare = React.memo((props) => {
 
   useEffect(() => {
     setGameGrid(props.gameMaster.provideGameGrid())
-  }, [props.diff, props.forceUpdate, props.gameMaster])
+  }, [props.diff, props.forceChildUpdate, props.gameMaster])
 
   useEffect(() => {
+    console.log('gameEnd', props.gameMaster.provideGameEnd())
     if (props.gameMaster.provideGameEnd()) {
       props.gameEnd()
     }

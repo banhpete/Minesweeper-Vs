@@ -12,6 +12,7 @@ class ClassicGamePage extends Component {
   state = {
     time: 0,
     diff: '',
+    forceChildUpdate: false
   }
 
   // Hidden state of the game grid using JavaScript Closure
@@ -58,12 +59,14 @@ class ClassicGamePage extends Component {
     } else {
       console.log("You Lose")
     }
-    this.forceUpdate()
+    this.forceUpdate();
   }
 
-  gameReset = (bol) => {
+  gameReset = () => {
     this.timeReset();
-    this.forceUpdate()
+    this.setState({
+      forceChildUpdate: !this.state.forceChildUpdate
+    })
   }
 
   render() {
@@ -85,7 +88,7 @@ class ClassicGamePage extends Component {
             <div className={ClassicGamePageStyles.SquareHeader}>
               <p>Mines: {this.gameMaster.provideNumOfMines()}</p>
               <Button
-                onClick={() => { this.gameMaster.gridReset(this.state.diff, this.state.forceUpdate, this.gameReset) }}>
+                onClick={() => { this.gameMaster.gridReset(this.state.diff, this.gameReset) }}>
                 {this.gameMaster.provideGameEnd() ? "Press here to reset" : "Reset"}
               </Button>
               <p> Time: {this.state.time}s</p>
@@ -95,8 +98,15 @@ class ClassicGamePage extends Component {
               gameEnd={this.gameEnd}
               diff={this.state.diff}
               gameMaster={this.gameMaster}
-              forceUpdate={this.state.forceUpdate}
+              forceChildUpdate={this.state.forceChildUpdate}
             />
+          </div>
+          : null
+        }
+
+        {this.gameMaster.provideGameEnd() ?
+          <div className={ClassicGamePageStyles.Popup}>
+            <h3 className={ClassicGamePageStyles.PopupTxt}>{this.gameMaster.providePlayerWinStatus() ? "You Won!" : "You Lost"}</h3>
           </div>
           : null
         }

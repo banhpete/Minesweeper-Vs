@@ -19,6 +19,8 @@ function gameMasterGen() {
   var numOfMines;
   var remainingSquares;
   var playerWin = false;
+  var gameStartTime;
+  var gameEndTime;
 
   /* -------- Internal Functions -------- */
   function checkSurroundings(y, x, fn) {
@@ -53,11 +55,14 @@ function gameMasterGen() {
     if (remainingSquares === 0) {
       gameEnd = true;
       playerWin = true;
+      gameEndTime = Date.now();
+      console.log((gameEndTime - gameStartTime) / 1000)
     }
   }
 
   /* -------- Public Functions -------- */
   function cellClick(y, x) {
+    if (!gameStartTime) gameStartTime = Date.now();
     if (!gameEnd && gameGrid[y][x] === "") {
       if (gridValues[y][x] === -1) { gameEnd = true; didPlayerWin(); return gameGrid }
       if (gridValues[y][x] > 0) {
@@ -78,6 +83,8 @@ function gameMasterGen() {
     numOfMines = gameSettings[newDiff].numOfMines;
     remainingSquares = gameSettings[newDiff].gridX * gameSettings[newDiff].gridY - numOfMines;
     playerWin = false;
+    gameStartTime = null;
+    gameEndTime = null;
     console.log(remainingSquares)
     const response = await fetch('/minesweeper', {
       method: 'POST',
@@ -98,10 +105,12 @@ function gameMasterGen() {
     cb(newDiff)
   }
 
-  async function gridReset(diff, bol, cb) {
+  async function gridReset(diff, cb) {
     gameEnd = false;
     remainingSquares = gameSettings[diff].gridX * gameSettings[diff].gridY - numOfMines;
     playerWin = false;
+    gameStartTime = null;
+    gameEndTime = null;
     console.log(remainingSquares)
     const response = await fetch('/minesweeper', {
       method: 'POST',
@@ -119,7 +128,7 @@ function gameMasterGen() {
       }
       gameGrid.push(gameGridRow)
     }
-    cb(!bol)
+    cb()
   }
 
   function providePlayerWinStatus() {
