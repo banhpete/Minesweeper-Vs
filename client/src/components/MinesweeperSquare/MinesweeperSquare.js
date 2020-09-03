@@ -3,6 +3,9 @@ import MinesweeperSquareStyles from './MinesweeperSquare.module.css'
 import MinesweeperCell from '../MinesweeperCell/MinesweeperCell';
 
 const MinesweeperSquare = React.memo((props) => {
+
+
+
   /* ---- Select Side Length ------------------------------------------------------------------------------------------------ */
   var side;
   if (props.diff === "Easy") { side = 60 }
@@ -15,9 +18,11 @@ const MinesweeperSquare = React.memo((props) => {
     for (let j = 0; j < props.gameGrid[0].length; j++) {
       Cells.push(
         <MinesweeperCell
+          index={`${i}-${j}`}
           key={`${i}-${j}`}
           side={side}
           onClick={() => { props.handleSquareClick(i, j) }}
+          onContextMenu={(e) => { e.preventDefault(); props.handleSquareRightClick(i, j) }}
         >{props.gameGrid[i][j]}
         </MinesweeperCell>)
     }

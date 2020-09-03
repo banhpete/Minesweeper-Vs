@@ -81,7 +81,18 @@ function gameMasterGen() {
       cb()
       return
     }
-    cb()
+    return
+  }
+
+  function cellRightClick(y, x, cb) {
+    if (!gameEnd) {
+      if (gameGrid[y][x] === 'f') {
+        gameGrid[y][x] = ""
+      } else if (gameGrid[y][x] === "") {
+        gameGrid[y][x] = "f"
+      }
+      cb()
+    }
     return
   }
 
@@ -157,7 +168,7 @@ function gameMasterGen() {
     return diff;
   }
 
-  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, cellClick, gridGen, gridReset }
+  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, cellClick, cellRightClick, gridGen, gridReset }
 }
 
 export default gameMasterGen

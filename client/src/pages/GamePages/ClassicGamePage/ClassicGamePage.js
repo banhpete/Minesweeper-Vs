@@ -26,7 +26,7 @@ class ClassicGamePage extends Component {
   }
 
   handleSquareClick = (i, j) => {
-    if (this.state.timeStatus != "start") {
+    if (!this.gameMaster.provideGameEnd()) {
       this.setState({
         timeStatus: 'start'
       })
@@ -43,6 +43,14 @@ class ClassicGamePage extends Component {
         })
       }
     });
+  }
+
+  handleSquareRightClick = (i, j) => {
+    this.gameMaster.cellRightClick(i, j, () => {
+      this.setState({
+        forceGridUpdate: !this.state.forceGridUpdate
+      })
+    })
   }
 
   handleReset = () => {
@@ -75,6 +83,7 @@ class ClassicGamePage extends Component {
             <MinesweeperSquare
               forceGridUpdate={this.state.forceGridUpdate}
               handleSquareClick={this.handleSquareClick}
+              handleSquareRightClick={this.handleSquareRightClick}
               diff={this.gameMaster.provideDiff()}
               gameGrid={this.gameMaster.provideGameGrid()}
             />
