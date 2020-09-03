@@ -41,7 +41,7 @@ const HomePage = () => {
 
   return (
     <div onClick={(e) => { e.stopPropagation(); changeButtonState() }} className={HomePageStyles.HomePage}>
-      <GameTitle />
+      <GameTitle title="Minesweeper Vs." subtitle="Online Minesweeper Multiplayer" />
       <div className={HomePageStyles.authContainer}>
         {username ?
           <>
