@@ -21,6 +21,7 @@ function gameMasterGen() {
   var playerWin = false;
   var gameStartTime;
   var gameEndTime;
+  var diff;
 
   /* -------- Internal Functions -------- */
   function checkSurroundings(y, x, fn) {
@@ -43,7 +44,6 @@ function gameMasterGen() {
         if (gridValues[y2][x2] > 0) {
           gameGrid[y2][x2] = gridValues[y2][x2]
           remainingSquares--;
-          console.log(remainingSquares)
         } else {
           floodFill(y2, x2)
         }
@@ -56,26 +56,33 @@ function gameMasterGen() {
       gameEnd = true;
       playerWin = true;
       gameEndTime = Date.now();
-      console.log((gameEndTime - gameStartTime) / 1000)
     }
   }
 
   /* -------- Public Functions -------- */
-  function cellClick(y, x) {
+  function cellClick(y, x, cb) {
     if (!gameStartTime) gameStartTime = Date.now();
     if (!gameEnd && gameGrid[y][x] === "") {
-      if (gridValues[y][x] === -1) { gameEnd = true; didPlayerWin(); return gameGrid }
+      if (gridValues[y][x] === -1) {
+        gameEnd = true;
+        gameGrid[y][x] = gridValues[y][x]
+        cb();
+        return
+      }
       if (gridValues[y][x] > 0) {
         gameGrid[y][x] = gridValues[y][x]
         remainingSquares--;
         didPlayerWin();
-        return gameGrid
+        cb()
+        return
       }
       floodFill(y, x)
       didPlayerWin();
-      return gameGrid
+      cb()
+      return
     }
-    return gameGrid
+    cb()
+    return
   }
 
   async function gridGen(newDiff, cb) {
@@ -85,7 +92,7 @@ function gameMasterGen() {
     playerWin = false;
     gameStartTime = null;
     gameEndTime = null;
-    console.log(remainingSquares)
+    diff = newDiff;
     const response = await fetch('/minesweeper', {
       method: 'POST',
       headers: {
@@ -105,13 +112,12 @@ function gameMasterGen() {
     cb(newDiff)
   }
 
-  async function gridReset(diff, cb) {
+  async function gridReset(cb) {
     gameEnd = false;
     remainingSquares = gameSettings[diff].gridX * gameSettings[diff].gridY - numOfMines;
     playerWin = false;
     gameStartTime = null;
     gameEndTime = null;
-    console.log(remainingSquares)
     const response = await fetch('/minesweeper', {
       method: 'POST',
       headers: {
@@ -147,7 +153,11 @@ function gameMasterGen() {
     return numOfMines;
   }
 
-  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, cellClick, gridGen, gridReset }
+  function provideDiff() {
+    return diff;
+  }
+
+  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, cellClick, gridGen, gridReset }
 }
 
 export default gameMasterGen

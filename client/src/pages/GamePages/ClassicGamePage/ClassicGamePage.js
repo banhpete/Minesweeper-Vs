@@ -3,106 +3,83 @@ import MinesweeperSquare from '../../../components/MinesweeperSquare/Minesweeper
 import ClassicGamePageStyles from './ClassicGamePage.module.css'
 import gameMasterGen from "../../../utils/minesweeperFunctions"
 import Select from '../../../components/Select/Select';
-import Button from '../../../components/Button/Button'
-
-// Check if there is a winner! And add win logic!
-// So far we have the game working but we have no win logic or reseting or score saving
+import GameTitle from '../../../components/GameTitle/GameTitle';
+import MinesweeperSquareHeader from '../../../components/MinesweeperSquareHeader/MinesweeperSquareHeader';
 
 class ClassicGamePage extends Component {
   state = {
-    time: 0,
-    diff: '',
-    forceChildUpdate: false
+    forceGridUpdate: false, // As a result of hidden state we need to use a state and pass down to children to force updates
+    timeStatus: "stop"
   }
 
-  // Hidden state of the game grid using JavaScript Closure
+  /* ---- Hidden State ------------------------------------------------------------------------------------------------ */
   gameMaster = gameMasterGen()
 
   /* ---- Event Methods ------------------------------------------------------------------------------------------------ */
-  handleDifficultychange = (e) => {
-    this.gameMaster.gridGen(e.target.value, (diff) => {
-      this.setState({ diff }, () => { if (this.interval) { this.timeReset() } })
+  handleDiffChange = (e) => {
+    this.gameMaster.gridGen(e.target.value, () => {
+      this.setState({
+        timeStatus: 'reset',
+        forceGridUpdate: !this.state.forceGridUpdate
+      })
     })
   }
 
-  /* ---- Time Methods ------------------------------------------------------------------------------------------------ */
-  interval = null
-
-  timeStart = () => {
-    if (!this.interval) {
-      this.interval = setInterval(() => {
-        this.setState({ time: this.state.time + 1 })
-      }, 1000);
+  handleSquareClick = (i, j) => {
+    if (this.state.timeStatus != "start") {
+      this.setState({
+        timeStatus: 'start'
+      })
     }
+    this.gameMaster.cellClick(i, j, () => {
+      if (this.gameMaster.provideGameEnd()) {
+        this.setState({
+          timeStatus: 'stop',
+          forceGridUpdate: !this.state.forceGridUpdate
+        })
+      } else {
+        this.setState({
+          forceGridUpdate: !this.state.forceGridUpdate
+        })
+      }
+    });
   }
 
-  timeStop = () => {
-    clearInterval(this.interval);
-    this.interval = null
-  }
-
-  timeReset = () => {
-    this.timeStop()
-    this.setState({ time: 0 })
-  }
-
-  componentWillUnmount = () => {
-    clearInterval(this.interval)
-  }
-
-  /* ---- Game Methods ------------------------------------------------------------------------------------------------ */
-
-  gameEnd = () => {
-    this.timeStop();
-    if (this.gameMaster.providePlayerWinStatus()) {
-      console.log("You Win")
-    } else {
-      console.log("You Lose")
-    }
-    this.forceUpdate();
-  }
-
-  gameReset = () => {
-    this.timeReset();
-    this.setState({
-      forceChildUpdate: !this.state.forceChildUpdate
+  handleReset = () => {
+    this.gameMaster.gridReset(() => {
+      this.setState({
+        timeStatus: "reset",
+        forceGridUpdate: !this.state.forceGridUpdate
+      })
     })
   }
 
   render() {
     return (
       <div className={ClassicGamePageStyles.ClassicGamePage}>
+        <GameTitle title="Minesweeper Classic Mode" />
+        <Select
+          initial={"Select a Difficulty"}
+          options={['Easy', 'Normal', 'Hard']}
+          style={{ display: "block", margin: "15px auto" }}
+          handleChange={this.handleDiffChange}
+        />
 
-        <div className={ClassicGamePageStyles.Header}>
-          <h2 className={ClassicGamePageStyles.HeaderTitle} >Minesweeper Classic Mode</h2>
-          <Select
-            initial={"Select a Difficulty"}
-            options={['Easy', 'Normal', 'Hard']}
-            style={{ width: 200, margin: "15px 20px" }}
-            handleChange={this.handleDifficultychange}
-          />
-        </div>
-
-        {this.state.diff ?
+        {this.gameMaster.provideDiff() ?
           <div className={ClassicGamePageStyles.SquareContainer}>
-            <div className={ClassicGamePageStyles.SquareHeader}>
-              <p>Mines: {this.gameMaster.provideNumOfMines()}</p>
-              <Button
-                onClick={() => { this.gameMaster.gridReset(this.state.diff, this.gameReset) }}>
-                {this.gameMaster.provideGameEnd() ? "Press here to reset" : "Reset"}
-              </Button>
-              <p> Time: {this.state.time}s</p>
-            </div>
+            <MinesweeperSquareHeader
+              timeStatus={this.state.timeStatus}
+              handleReset={this.handleReset}
+              mines={this.gameMaster.provideNumOfMines()}
+            />
             <MinesweeperSquare
-              timeStart={this.timeStart}
-              gameEnd={this.gameEnd}
-              diff={this.state.diff}
-              gameMaster={this.gameMaster}
-              forceChildUpdate={this.state.forceChildUpdate}
+              forceGridUpdate={this.state.forceGridUpdate}
+              handleSquareClick={this.handleSquareClick}
+              diff={this.gameMaster.provideDiff()}
+              gameGrid={this.gameMaster.provideGameGrid()}
             />
           </div>
-          : null
-        }
+          : null}
 
         {this.gameMaster.provideGameEnd() ?
           <div className={ClassicGamePageStyles.Popup}>
