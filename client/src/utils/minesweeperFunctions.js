@@ -12,8 +12,8 @@ function gameMasterGen() {
     },
   }
 
-  /* -------- Game State -------- */
-  var gridValues = [];
+  /* ---- State ------------------------------------------------------------------------------------------------ */
+  var valueGrid = [];
   var gameGrid = [];
   var gameEnd = false;
   var numOfMines;
@@ -23,12 +23,12 @@ function gameMasterGen() {
   var gameEndTime;
   var diff;
 
-  /* -------- Internal Functions -------- */
+  /* ---- Private Functions ------------------------------------------------------------------------------------------------ */
   function checkSurroundings(y, x, fn) {
     for (let dx = -1; dx <= 1; dx++) {
-      if (x + dx >= 0 && x + dx < gridValues[0].length) {
+      if (x + dx >= 0 && x + dx < valueGrid[0].length) {
         for (let dy = -1; dy <= 1; dy++) {
-          if (y + dy >= 0 && y + dy < gridValues.length) {
+          if (y + dy >= 0 && y + dy < valueGrid.length) {
             fn(y + dy, x + dx);
           }
         }
@@ -37,12 +37,12 @@ function gameMasterGen() {
   }
 
   function floodFill(y, x) {
-    gameGrid[y][x] = gridValues[y][x]
+    gameGrid[y][x] = valueGrid[y][x]
     remainingSquares--;
     checkSurroundings(y, x, function (y2, x2) {
-      if (gameGrid[y2][x2] === "" && gridValues[y2][x2] !== -1) {
-        if (gridValues[y2][x2] > 0) {
-          gameGrid[y2][x2] = gridValues[y2][x2]
+      if (gameGrid[y2][x2] === "" && valueGrid[y2][x2] !== -1) {
+        if (valueGrid[y2][x2] > 0) {
+          gameGrid[y2][x2] = valueGrid[y2][x2]
           remainingSquares--;
         } else {
           floodFill(y2, x2)
@@ -59,18 +59,54 @@ function gameMasterGen() {
     }
   }
 
-  /* -------- Public Functions -------- */
+  function moveMines(y, x) {
+    checkSurroundings(y, x, (y2, x2) => {
+      if (valueGrid[y2][x2] === -1) {
+        // Mine found in area around y, x - Therefore remove
+        valueGrid[y2][x2] = 0;
+        // Find random location for mine where it is not in original area (3 by 3 with y,x in the middle)
+        let randY = Math.floor(Math.random() * valueGrid.length);
+        let randX = Math.floor(Math.random() * valueGrid[0].length);
+        while (valueGrid[randY][randX] === -1 || Math.abs(randY - y) <= 1 || Math.abs(randX - x) <= 1) {
+          randY = Math.floor(Math.random() * valueGrid.length);
+          randX = Math.floor(Math.random() * valueGrid[0].length);
+        }
+        // Place new mine and update the surrounding area
+        valueGrid[randY][randX] = -1;
+        checkSurroundings(randY, randX, (y3, x3) => {
+          if (valueGrid[y3][x3] !== -1) {
+            valueGrid[y3][x3]++;
+          }
+        })
+        // Update the area of removed mine
+        checkSurroundings(y2, x2, (y3, x3) => {
+          if (valueGrid[y3][x3] === -1) {
+            valueGrid[y2][x2]++;
+          }
+          if (valueGrid[y3][x3] > 0 && !(y3 === y2 && x3 === x2)) {
+            valueGrid[y3][x3]--;
+          }
+        })
+      }
+    })
+
+  }
+
+  /* ---- Public Functions ------------------------------------------------------------------------------------------------ */
   function cellClick(y, x, cb) {
-    if (!gameStartTime) gameStartTime = Date.now();
+    if (!gameStartTime) {
+      gameStartTime = Date.now();
+      moveMines(y, x);
+    }
     if (!gameEnd && gameGrid[y][x] === "") {
-      if (gridValues[y][x] === -1) {
+      if (valueGrid[y][x] === -1) {
         gameEnd = true;
-        gameGrid[y][x] = gridValues[y][x]
+        gameGrid[y][x] = valueGrid[y][x]
         cb();
         return
       }
-      if (gridValues[y][x] > 0) {
-        gameGrid[y][x] = gridValues[y][x]
+      if (valueGrid[y][x] > 0) {
+        gameGrid[y][x] = valueGrid[y][x]
         remainingSquares--;
         didPlayerWin();
         cb()
@@ -111,11 +147,11 @@ function gameMasterGen() {
       },
       body: JSON.stringify({ diff: newDiff })
     })
-    gridValues = await response.json()
+    valueGrid = await response.json()
     gameGrid = [];
-    for (let i = 0; i < gridValues.length; i++) {
+    for (let i = 0; i < valueGrid.length; i++) {
       let gameGridRow = [];
-      for (let j = 0; j < gridValues[0].length; j++) {
+      for (let j = 0; j < valueGrid[0].length; j++) {
         gameGridRow.push("")
       }
       gameGrid.push(gameGridRow)
@@ -136,11 +172,11 @@ function gameMasterGen() {
       },
       body: JSON.stringify({ diff })
     })
-    gridValues = await response.json()
+    valueGrid = await response.json()
     gameGrid = [];
-    for (let i = 0; i < gridValues.length; i++) {
+    for (let i = 0; i < valueGrid.length; i++) {
       let gameGridRow = [];
-      for (let j = 0; j < gridValues[0].length; j++) {
+      for (let j = 0; j < valueGrid[0].length; j++) {
         gameGridRow.push("")
       }
       gameGrid.push(gameGridRow)
@@ -166,6 +202,38 @@ function gameMasterGen() {
 
   function provideDiff() {
     return diff;
+  }
+
+  /* ---- Test Function Only for Development ------------------------------------------------------------------------------------------------ */
+  if (process.env.NODE_ENV === 'development') {
+    var gridTest = (arr) => {
+      let errorFound = false;
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[0].length; j++) {
+          if (arr[i][j] > 0) {
+            let count = 0;
+            checkSurroundings(i, j, (i2, j2) => {
+              if (arr[i2][j2] === -1) {
+                count++
+              }
+            })
+            if (arr[i][j] !== count) {
+              errorFound = true;
+              console.log(`Error at ${i} ${j}`)
+            }
+          } else if (arr[i][j] === -1) {
+            checkSurroundings(i, j, (i2, j2) => {
+              if (arr[i2][j2] === 0) {
+                errorFound = true
+                console.log(`Error at ${i} ${j}`)
+              }
+            })
+          }
+        }
+      }
+      if (errorFound) console.log("There was an error");
+      else console.log("No Error")
+    }
   }
 
   return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, cellClick, cellRightClick, gridGen, gridReset }
