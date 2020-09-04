@@ -54,7 +54,7 @@ class ClassicGamePage extends Component {
   }
 
   handleReset = () => {
-    this.gameMaster.gridReset(() => {
+    this.gameMaster.gridGen(false, () => {
       this.setState({
         timeStatus: "reset",
         forceGridUpdate: !this.state.forceGridUpdate

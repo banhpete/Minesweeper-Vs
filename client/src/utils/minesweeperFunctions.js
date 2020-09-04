@@ -24,6 +24,7 @@ function gameMasterGen() {
   var diff;
 
   /* ---- Private Functions ------------------------------------------------------------------------------------------------ */
+  // Function to check surrounding area of one cell and run function at each cell. Used as part of different functions.
   function checkSurroundings(y, x, fn) {
     for (let dx = -1; dx <= 1; dx++) {
       if (x + dx >= 0 && x + dx < valueGrid[0].length) {
@@ -36,6 +37,7 @@ function gameMasterGen() {
     }
   }
 
+  // Propagate the uncovering of cells that are empty
   function floodFill(y, x) {
     gameGrid[y][x] = valueGrid[y][x]
     remainingSquares--;
@@ -51,6 +53,7 @@ function gameMasterGen() {
     });
   }
 
+  // Logic to check if player won or not
   function didPlayerWin() {
     if (remainingSquares === 0) {
       gameEnd = true;
@@ -59,6 +62,7 @@ function gameMasterGen() {
     }
   }
 
+  // Logic to ensure that the player's first move does not result in a lost. Only runs once during a game.
   function moveMines(y, x) {
     checkSurroundings(y, x, (y2, x2) => {
       if (valueGrid[y2][x2] === -1) {
@@ -89,7 +93,6 @@ function gameMasterGen() {
         })
       }
     })
-
   }
 
   /* ---- Public Functions ------------------------------------------------------------------------------------------------ */
@@ -134,37 +137,14 @@ function gameMasterGen() {
 
   async function gridGen(newDiff, cb) {
     gameEnd = false;
-    numOfMines = gameSettings[newDiff].numOfMines;
-    remainingSquares = gameSettings[newDiff].gridX * gameSettings[newDiff].gridY - numOfMines;
     playerWin = false;
     gameStartTime = null;
     gameEndTime = null;
-    diff = newDiff;
-    const response = await fetch('/minesweeper', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ diff: newDiff })
-    })
-    valueGrid = await response.json()
-    gameGrid = [];
-    for (let i = 0; i < valueGrid.length; i++) {
-      let gameGridRow = [];
-      for (let j = 0; j < valueGrid[0].length; j++) {
-        gameGridRow.push("")
-      }
-      gameGrid.push(gameGridRow)
+    if (newDiff) {
+      diff = newDiff;
+      numOfMines = gameSettings[diff].numOfMines;
     }
-    cb(newDiff)
-  }
-
-  async function gridReset(cb) {
-    gameEnd = false;
     remainingSquares = gameSettings[diff].gridX * gameSettings[diff].gridY - numOfMines;
-    playerWin = false;
-    gameStartTime = null;
-    gameEndTime = null;
     const response = await fetch('/minesweeper', {
       method: 'POST',
       headers: {
@@ -236,7 +216,7 @@ function gameMasterGen() {
     }
   }
 
-  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, cellClick, cellRightClick, gridGen, gridReset }
+  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, cellClick, cellRightClick, gridGen }
 }
 
 export default gameMasterGen
