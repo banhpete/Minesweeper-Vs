@@ -32,7 +32,7 @@ const HomePage = () => {
   const userOnlineMsg = () => {
     if ((totalConnections - 1) <= 0) {
       return "There are no other Mine Sweepers Online"
-    } else if ((totalConnections - 1) == 1) {
+    } else if ((totalConnections - 1) === 1) {
       return "There is 1 other Mine Sweeper Online"
     } else {
       return `There are ${totalConnections - 1} other Mine Sweepers Online`

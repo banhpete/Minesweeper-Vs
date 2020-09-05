@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import MinesweeperSquareHeaderStyles from './MinesweeperSquareHeader.module.css'
 import Button from '../Button/Button';
 import Timer from '../Timer/Timer';
