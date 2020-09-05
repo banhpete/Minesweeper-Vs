@@ -24,7 +24,7 @@ async function listScores(req, res, next) {
     const error = new Error("Database issue when retrieving scores")
     return next(error)
   }
-  return res.json({ [req.query.difficulty]: scoresData.rows })
+  return res.json(scoresData.rows)
 }
 
 module.exports = { submitScore, listScores } 
