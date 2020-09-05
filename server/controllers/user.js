@@ -1,6 +1,6 @@
 const psqlClient = require('../db')
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const saltRounds = 8;
 
 function createJWT(username) {
@@ -92,4 +92,39 @@ async function userLogin(req, res, next) {
   return next(error)
 }
 
-module.exports = { userCreate, userLogin } 
+async function authUser(req, res, next) {
+  let token = req.get('Authorization');
+  token = token.replace('Bearer ', '')
+  if (token) {
+    jwt.verify(token, process.env.SECRET, async (err, decoded) => {
+      if (err) {
+        const error = new Error("JWT is invalid")
+        error.statusCode = 400;
+        return next(error)
+      } else {
+        req.username = decoded.username;
+        try {
+          const query = `SELECT id FROM users where username=$1`
+          const values = [req.username];
+          const data = await psqlClient.query(query, values)
+          req.userId = data.rows[0].id
+        } catch (err) {
+          const error = new Error("Issue with the database")
+          return next(error)
+        }
+        if (req.userId) {
+          return next()
+        } else {
+          const error = new Error("User not found")
+          return next(error)
+        }
+      }
+    })
+  } else {
+    const error = new Error("User not logged in")
+    error.statusCode = 400;
+    return next(error)
+  }
+}
+
+module.exports = { userCreate, userLogin, authUser } 
