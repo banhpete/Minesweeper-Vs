@@ -23,3 +23,7 @@
   background:rgb(146, 146, 146);
 }
 
+.ButtonActivated {
+  color:white;
+  background:darkred;
+}
