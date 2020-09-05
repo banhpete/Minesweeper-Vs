@@ -9,12 +9,23 @@ async function submitScore(req, res, next) {
     await psqlClient.query(query, values)
     var updatedScoresData = await psqlClient.query(query2, values2)
   } catch (err) {
-    console.log(err)
     const error = new Error("Database issue when submitting score")
     return next(error)
   }
-  console.log(updatedScoresData);
   return res.json({ "newScores": updatedScoresData.rows })
 }
 
-module.exports = { submitScore } 
+async function listScores(req, res, next) {
+  console.log(req.query);
+  try {
+    const query = "SELECT username, time, difficulty FROM scores INNER JOIN users ON scores.user_id = users.id WHERE difficulty=$1 ORDER BY time LIMIT 10";
+    const values = [req.query.difficulty];
+    var scoresData = await psqlClient.query(query, values)
+  } catch (err) {
+    const error = new Error("Database issue when retrieving scores")
+    return next(error)
+  }
+  return res.json({ [req.query.difficulty]: scoresData.rows })
+}
+
+module.exports = { submitScore, listScores } 

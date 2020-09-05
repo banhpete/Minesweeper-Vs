@@ -1,5 +1,5 @@
 const express = require('express');
-const scoreCtrl = require('../controllers/score')
+const scoreCtrl = require('../controllers/scores')
 const { authUser } = require('../controllers/user')
 
 const router = express.Router();
@@ -8,8 +8,6 @@ const router = express.Router();
 router.post("/", authUser, scoreCtrl.submitScore)
 
 // Score Retrieve
-router.get("/", function (req, res, next) {
-  res.json({ "Message": "It Works!" })
-})
+router.get("/", scoreCtrl.listScores)
 
 module.exports = router;

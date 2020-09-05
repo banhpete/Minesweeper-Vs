@@ -9,7 +9,7 @@ require('dotenv').config()
 // Import routes
 const userRoute = require('./routes/user')
 const minesweeperRoute = require('./routes/minesweeper')
-const scoreRoute = require('./routes/score')
+const scoresRoute = require('./routes/scores')
 
 // Implementing Middleware
 const app = express()
@@ -19,7 +19,7 @@ app.use(express.json())
 // Setting Routes
 app.use('/user', userRoute)
 app.use('/minesweeper', minesweeperRoute)
-app.use('/score', scoreRoute)
+app.use('/scores', scoresRoute)
 
 // Error Handling
 app.use(function (error, req, res, next) {
