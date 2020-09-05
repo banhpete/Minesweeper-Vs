@@ -1,0 +1,35 @@
+.Container{
+  border:1px solid black;
+  width: 400px;
+  margin:0 auto;
+}
+
+.Header{
+  background:black;
+  color:white;
+  text-align: center;
+  padding:5px 0;
+  font-size:20px;
+  height:24px;
+}
+
+.Row{
+  display:flex;
+  flex-direction: row;
+
+}
+
+.Cell{
+  border:1px solid black;
+  width:50%;
+  text-align:center;
+}
+
+.Title{
+  margin: 5px 0;
+  font-weight: 700;
+}
+
+.Text{
+  margin: 5px 0;
+}

@@ -1,5 +1,5 @@
 import { tokenGet } from './tokenServices'
-const BASE_URL = "/score"
+const BASE_URL = "/scores"
 
 async function submitScore(score) {
   const response = await fetch(BASE_URL, {
@@ -14,4 +14,12 @@ async function submitScore(score) {
   console.log(responseData);
 }
 
-export { submitScore }
+async function listScores(diff) {
+  const response = await fetch(BASE_URL + `?difficulty=${diff}`, {
+    method: "GET",
+  })
+  const responseData = await response.json()
+  return responseData;
+}
+
+export { submitScore, listScores }

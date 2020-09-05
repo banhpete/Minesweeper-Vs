@@ -5,6 +5,7 @@ import gameMasterGen from "../../../utils/minesweeperFunctions"
 import Select from '../../../components/Select/Select';
 import GameTitle from '../../../components/GameTitle/GameTitle';
 import MinesweeperSquareHeader from '../../../components/MinesweeperSquareHeader/MinesweeperSquareHeader';
+import Highscores from '../../../components/Highscores/Highscores';
 
 class ClassicGamePage extends Component {
   state = {
@@ -88,7 +89,7 @@ class ClassicGamePage extends Component {
               gameGrid={this.gameMaster.provideGameGrid()}
             />
           </div>
-          : null}
+          : <Highscores></Highscores>}
 
         {this.gameMaster.provideGameEnd() ?
           <div className={ClassicGamePageStyles.Popup}>
