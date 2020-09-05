@@ -1,5 +1,5 @@
 import { tokenGet, tokenRemove, tokenSet } from './tokenServices'
-const BASE_URL = "/user/"
+const BASE_URL = "/user"
 
 function userGet() {
   const token = tokenGet()
