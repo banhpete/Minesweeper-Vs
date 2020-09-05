@@ -47,19 +47,19 @@ const HomePage = () => {
           <>
             <p className={HomePageStyles.authTitle}>Currently Playing as {username}</p>
             <p className={HomePageStyles.authTitle}>{userOnlineMsg()}</p>
-            <Button height={25} width={113} margin={"3px 3px 34px 3px"} fontSize={14} onClick={userLogoffFreeze} loading={loading}>Log Off</Button>
+            <Button style={{ height: 25, width: 113, margin: '3px 3px 34px 3px', fontSize: 14 }} onClick={userLogoffFreeze} loading={loading}>Log Off</Button>
           </> :
           <>
             <p className={HomePageStyles.authTitle}>{userMsg}</p>
             <p className={HomePageStyles.authTitle}>{userOnlineMsg()}</p>
-            <Link to="/user/login"><Button height={25} width={113} margin={3} fontSize={14}>Log In</Button></Link>
-            <Link to="/user/create"><Button height={25} width={113} margin={3} fontSize={14}>Create Account</Button></Link>
+            <Link to="/user/login"><Button style={{ height: 25, width: 113, margin: 3, fontSize: 14 }}>Log In</Button></Link>
+            <Link to="/user/create"><Button style={{ height: 25, width: 113, margin: 3, fontSize: 14 }}>Create Account</Button></Link>
           </>
         }
       </div>
       <div className={HomePageStyles.menuContainer}>
         <h4 className={HomePageStyles.menuTitle}>Pick a Game Mode</h4>
-        <Link to="/game/classic"><Button height={50} width={300} margin={10} fontSize={18} loading={loading}>Classic Minesweeper (1P)</Button></Link>
+        <Link to="/game/classic"><Button style={{ height: 50, width: 300, margin: 10, fontSize: 18 }} loading={loading}>Classic Minesweeper (1P)</Button></Link>
         <SpecialButton
           height={50}
           width={300}
@@ -72,8 +72,8 @@ const HomePage = () => {
           loading={loading}
           components={
             <>
-              <Button height={35} width={175} margin='auto' fontsize={16}>Challenge Random Player</Button>
-              <Button height={35} width={175} margin='auto' fontsize={16}>Challenge Friend</Button>
+              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Random Player</Button>
+              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Friend</Button>
             </>
           }>
           Time Race Minesweeper (2P)
@@ -90,8 +90,8 @@ const HomePage = () => {
           loading={loading}
           components={
             <>
-              <Button height={35} width={175} margin='auto' fontsize={16}>Challenge Random Player</Button>
-              <Button height={35} width={175} margin='auto' fontsize={16}>Challenge Friend</Button>
+              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Random Player</Button>
+              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Friend</Button>
             </>
           }>
           Minehunter (2P)
@@ -108,8 +108,8 @@ const HomePage = () => {
           loading={loading}
           components={
             <>
-              <Button height={35} width={175} margin='auto' fontsize={16}>Challenge Random Player</Button>
-              <Button height={35} width={175} margin='auto' fontsize={16}>Challenge Friend</Button>
+              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Random Player</Button>
+              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Friend</Button>
             </>
           }>
           Minehunter Galore (2P)
