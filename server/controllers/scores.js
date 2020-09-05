@@ -16,7 +16,6 @@ async function submitScore(req, res, next) {
 }
 
 async function listScores(req, res, next) {
-  console.log(req.query);
   try {
     const query = "SELECT username, time, difficulty FROM scores INNER JOIN users ON scores.user_id = users.id WHERE difficulty=$1 ORDER BY time LIMIT 10";
     const values = [req.query.difficulty];

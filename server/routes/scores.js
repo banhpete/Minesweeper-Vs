@@ -4,10 +4,10 @@ const { authUser } = require('../controllers/user')
 
 const router = express.Router();
 
-// Score Submit
+// Submit score and return new top 10 scores based on some difficulty
 router.post("/", authUser, scoreCtrl.submitScore)
 
-// Score Retrieve
+// Retreieve top 10 scores based on some difficulty
 router.get("/", scoreCtrl.listScores)
 
 module.exports = router;
