@@ -184,6 +184,10 @@ function gameMasterGen() {
     return diff;
   }
 
+  function provideTime() {
+    return Math.floor((gameEndTime - gameStartTime) / 1000)
+  }
+
   /* ---- Test Function Only for Development ------------------------------------------------------------------------------------------------ */
   if (process.env.NODE_ENV === 'development') {
     var gridTest = (arr) => {
@@ -216,7 +220,7 @@ function gameMasterGen() {
     }
   }
 
-  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, cellClick, cellRightClick, gridGen }
+  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, provideTime, cellClick, cellRightClick, gridGen }
 }
 
 export default gameMasterGen
