@@ -1,0 +1,22 @@
+.Popup{
+  transform-origin: center;
+  color:white;
+  transform:translate(-50%,-50%);
+  left:50%;
+  top:48%;
+  position:absolute;
+  width:600px;
+  background:black;
+}
+
+.PopupTxt{
+  font-size:24px;
+  text-align:center;
+}
+
+.PopupButtons{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  margin:-15px 0 20px 0;
+}

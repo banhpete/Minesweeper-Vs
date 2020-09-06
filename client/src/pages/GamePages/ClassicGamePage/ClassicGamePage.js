@@ -6,11 +6,12 @@ import Select from '../../../components/Select/Select';
 import GameTitle from '../../../components/GameTitle/GameTitle';
 import MinesweeperSquareHeader from '../../../components/MinesweeperSquareHeader/MinesweeperSquareHeader';
 import Highscores from '../../../components/Highscores/Highscores';
+import MinesweeperSquarePopUp from '../../../components/MinesweeperSquarePopUp/MinesweeperSquarePopUp';
 
 class ClassicGamePage extends Component {
   state = {
     forceGridUpdate: false, // As a result of hidden state we need to use a state and pass down to children to force updates
-    timeStatus: "stop"
+    timeStatus: "stop",
   }
 
   /* ---- Hidden State ------------------------------------------------------------------------------------------------ */
@@ -21,7 +22,7 @@ class ClassicGamePage extends Component {
     this.gameMaster.gridGen(e.target.value, () => {
       this.setState({
         timeStatus: 'reset',
-        forceGridUpdate: !this.state.forceGridUpdate
+        forceGridUpdate: !this.state.forceGridUpdate,
       })
     })
   }
@@ -58,7 +59,7 @@ class ClassicGamePage extends Component {
     this.gameMaster.gridGen(false, () => {
       this.setState({
         timeStatus: "reset",
-        forceGridUpdate: !this.state.forceGridUpdate
+        forceGridUpdate: !this.state.forceGridUpdate,
       })
     })
   }
@@ -68,7 +69,7 @@ class ClassicGamePage extends Component {
       <div className={ClassicGamePageStyles.ClassicGamePage}>
         <GameTitle title="Minesweeper Classic Mode" />
         <Select
-          initial={"Select a Difficulty"}
+          initial={"Select a Difficulty to Start"}
           options={['Easy', 'Normal', 'Hard']}
           style={{ display: "block", margin: "15px auto" }}
           handleChange={this.handleDiffChange}
@@ -92,12 +93,12 @@ class ClassicGamePage extends Component {
           : <Highscores></Highscores>}
 
         {this.gameMaster.provideGameEnd() ?
-          <div className={ClassicGamePageStyles.Popup}>
-            <h3 className={ClassicGamePageStyles.PopupTxt}>{this.gameMaster.providePlayerWinStatus() ? "You Won!" : "You Lost"}</h3>
-          </div>
-          : null
-        }
-
+          <MinesweeperSquarePopUp
+            playerWinStatus={this.gameMaster.providePlayerWinStatus()}
+            time={this.gameMaster.provideTime()}
+            diff={this.gameMaster.provideDiff()}
+          /> :
+          null}
       </div>
     );
   }
