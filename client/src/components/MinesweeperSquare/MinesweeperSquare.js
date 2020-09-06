@@ -3,9 +3,6 @@ import MinesweeperSquareStyles from './MinesweeperSquare.module.css'
 import MinesweeperCell from '../MinesweeperCell/MinesweeperCell';
 
 const MinesweeperSquare = React.memo((props) => {
-
-
-
   /* ---- Select Side Length ------------------------------------------------------------------------------------------------ */
   var side;
   if (props.diff === "Easy") { side = 60 }
