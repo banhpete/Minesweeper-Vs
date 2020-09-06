@@ -16,20 +16,20 @@
 .Row{
   display:flex;
   flex-direction: row;
-
+  padding:4px;
+  border:1px solid black;
 }
 
 .Cell{
-  border:1px solid black;
   width:50%;
   text-align:center;
 }
 
 .Title{
-  margin: 5px 0;
+  margin: 0 0;
   font-weight: 700;
 }
 
 .Text{
-  margin: 5px 0;
+  margin: 0 0;
 }

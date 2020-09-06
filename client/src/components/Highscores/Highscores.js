@@ -22,9 +22,9 @@ const Highscores = () => {
 
   const renderRows = (arr) => {
     return arr.map((score) => (
-      <div className={HighscoresStyles.Row}>
-        <div className={HighscoresStyles.Cell}><p className={HighscoresStyles.Text}>{score.username}</p></div>
-        <div className={HighscoresStyles.Cell}><p className={HighscoresStyles.Text}>{score.time} s</p></div>
+      <div key={score.id} className={HighscoresStyles.Row}>
+        <div key={`${score.id}-${score.username}`} className={HighscoresStyles.Cell}><p className={HighscoresStyles.Text}>{score.username}</p></div>
+        <div key={`${score.id}-${score.time}`} className={HighscoresStyles.Cell}><p className={HighscoresStyles.Text}>{score.time} s</p></div>
       </div>
     ))
   }
@@ -32,6 +32,7 @@ const Highscores = () => {
   return (
     <div className={HighscoresStyles.Container}>
       <div className={HighscoresStyles.Header}>
+        <p className={HighscoresStyles.Title}>High Scores</p>
       </div>
       <div className={HighscoresStyles.Body}>
         <div className={HighscoresStyles.Row}>
