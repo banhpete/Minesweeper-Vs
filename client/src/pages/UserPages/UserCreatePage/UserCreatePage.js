@@ -18,12 +18,6 @@ class UserCreatePage extends Component {
     loading: false
   }
 
-  query = null;
-  componentDidMount() {
-    this.query = new URLSearchParams(this.props.location.search)
-    console.log(this.query.get('next'))
-  }
-
   static contextType = UserContext
 
   handleChange = (e) => {
@@ -100,8 +94,14 @@ class UserCreatePage extends Component {
       this.setState({
         loading: false
       })
+
       this.context.userLogin()
-      this.props.history.push('/')
+      let routerState = this.props.location.state
+      if (routerState) {
+        this.props.history.push(routerState.from, { from: 'login' })
+      } else {
+        this.props.history.push('/')
+      }
     }
 
     return

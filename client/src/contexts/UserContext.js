@@ -4,7 +4,7 @@ import { userGet, userLogoff } from '../utils/userServices'
 export const UserContext = createContext()
 
 class UserContextProvider extends React.Component {
-  state = { username: userGet(), score: 0, difficulty: '' }
+  state = { username: userGet(), time: 0, difficulty: '' }
 
   userLogin = (token) => {
     this.setState({ username: userGet() })
@@ -15,16 +15,16 @@ class UserContextProvider extends React.Component {
     this.setState({ username: "" })
   }
 
-  saveScore = (score, difficulty) => {
+  saveTime = (time, difficulty) => {
     this.setState({
-      score,
+      time,
       difficulty
     })
   }
 
   render() {
     return (
-      <UserContext.Provider value={{ ...this.state, userLogoff: this.userLogoff, userLogin: this.userLogin, saveScore: this.saveScore }}>
+      <UserContext.Provider value={{ ...this.state, userLogoff: this.userLogoff, userLogin: this.userLogin, saveTime: this.saveTime }}>
         {this.props.children}
       </UserContext.Provider>
     );

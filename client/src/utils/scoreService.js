@@ -14,7 +14,6 @@ async function submitScore(time, difficulty) {
     })
   })
   const responseData = await response.json()
-  console.log(responseData);
 }
 
 async function listScores(diff) {

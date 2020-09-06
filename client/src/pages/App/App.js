@@ -23,7 +23,7 @@ function App() {
             <Switch>
               <Route exact path="/user/login" render={(props) => (!userGet() ? <UserLoginPage {...props} /> : <HomePage />)} />
               <Route exact path="/user/create" render={(props) => (!userGet() ? <UserCreatePage {...props} /> : <HomePage />)} />
-              <Route exact path="/game/classic" render={(props) => <ClassicGamePage />} />
+              <Route exact path="/game/classic" render={(props) => <ClassicGamePage {...props} />} />
               <Route path="/" render={(props) => <HomePage />} />
             </Switch>
           </div>

@@ -11,10 +11,9 @@ const MinesweeperSquarePopUp = (props) => {
   useEffect(() => {
     if (props.playerWinStatus) {
       if (user.username) {
-        console.log(props.time, props.diff)
         submitScore(props.time, props.diff)
       } else {
-        user.saveScore(props.time, props.diff)
+        user.saveTime(props.time, props.diff)
       }
     }
   }, [])
@@ -26,8 +25,8 @@ const MinesweeperSquarePopUp = (props) => {
     } else {
       popUpContent = [<h3 key={'login'} className={MinesweeperSquarePopUpStyles.PopupTxt}>You Won! Log in to have your score submitted!</h3>,
       <div key={'popupBtns'} className={MinesweeperSquarePopUpStyles.PopupButtons}>
-        <Link key={1} to="/user/login?next=game/classic"><Button style={{ margin: '0 10px', padding: '3px 8px' }}>Log In</Button></Link>
-        <Link key={2} to="/user/create?next=game/classic" ><Button style={{ margin: '0 10px', padding: '3px 8px' }}>Create Account</Button></Link>
+        <Link key={1} to={{ pathname: "/user/login", state: { from: "/game/classic" } }}><Button style={{ margin: '0 10px', padding: '3px 8px' }}>Log In</Button></Link>
+        <Link key={2} to={{ pathname: "/user/login", state: { from: "/game/classic" } }}><Button style={{ margin: '0 10px', padding: '3px 8px' }}>Create Account</Button></Link>
       </div>
       ]
     }

@@ -17,12 +17,6 @@ class UserLoginPage extends Component {
 
   static contextType = UserContext;
 
-  query = null;
-  componentDidMount() {
-    this.query = new URLSearchParams(this.props.location.search)
-    console.log(this.query.get('next'))
-  }
-
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -53,8 +47,14 @@ class UserLoginPage extends Component {
       this.setState({
         loading: false
       })
+
       this.context.userLogin()
-      this.props.history.push('/')
+      let routerState = this.props.location.state
+      if (routerState) {
+        this.props.history.push(routerState.from, { from: 'login' })
+      } else {
+        this.props.history.push('/')
+      }
     }
 
     return

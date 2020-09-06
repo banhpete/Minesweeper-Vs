@@ -7,11 +7,27 @@ import GameTitle from '../../../components/GameTitle/GameTitle';
 import MinesweeperSquareHeader from '../../../components/MinesweeperSquareHeader/MinesweeperSquareHeader';
 import Highscores from '../../../components/Highscores/Highscores';
 import MinesweeperSquarePopUp from '../../../components/MinesweeperSquarePopUp/MinesweeperSquarePopUp';
+import { UserContext } from '../../../contexts/UserContext'
+import { submitScore } from '../../../utils/scoreService'
 
 class ClassicGamePage extends Component {
   state = {
     forceGridUpdate: false, // As a result of hidden state we need to use a state and pass down to children to force updates
     timeStatus: "stop",
+    msg: ""
+  }
+
+  static contextType = UserContext
+
+  /* ---- Submit Score if redirected from login/create ---------------------------------------------------------------- */
+  componentDidMount = () => {
+    if (this.props.location.state) {
+      this.props.history.replace(this.props.location.pathname, undefined)
+      submitScore(this.context.time, this.context.difficulty)
+      this.setState({
+        msg: "Your score was submitted"
+      })
+    }
   }
 
   /* ---- Hidden State ------------------------------------------------------------------------------------------------ */
@@ -90,7 +106,7 @@ class ClassicGamePage extends Component {
               gameGrid={this.gameMaster.provideGameGrid()}
             />
           </div>
-          : <Highscores></Highscores>}
+          : <Highscores note={this.state.msg}></Highscores>}
 
         {this.gameMaster.provideGameEnd() ?
           <MinesweeperSquarePopUp
