@@ -17,6 +17,12 @@ class UserLoginPage extends Component {
 
   static contextType = UserContext;
 
+  query = null;
+  componentDidMount() {
+    this.query = new URLSearchParams(this.props.location.search)
+    console.log(this.query.get('next'))
+  }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -72,7 +78,7 @@ class UserLoginPage extends Component {
           <TypingInput handleChange={this.handleChange} name="password" type="password" value={this.state.password} />
           <p className={UserLoginPageStyles.windowText}>Forgot Password</p>
           {errMsg}
-          <Button height={30} width={125} fontSize={16} margin={'15px auto 10px auto'} loading={this.state.loading}>Log In</Button>
+          <Button style={{ height: 30, width: 125, fontSize: 16, margin: '15px auto 10px auto' }} loading={this.state.loading}>Log In</Button>
           <div className={UserLoginPageStyles.cancel}>
             <Link to='/'>Cancel Log In</Link>
           </div>

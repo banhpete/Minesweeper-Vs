@@ -18,6 +18,12 @@ class UserCreatePage extends Component {
     loading: false
   }
 
+  query = null;
+  componentDidMount() {
+    this.query = new URLSearchParams(this.props.location.search)
+    console.log(this.query.get('next'))
+  }
+
   static contextType = UserContext
 
   handleChange = (e) => {
@@ -122,7 +128,7 @@ class UserCreatePage extends Component {
           <p className={UserCreatePageStyles.windowSubTitle}>Confirm Email:</p>
           <TypingInput handleChange={this.handleChange} name="emailConfirm" value={this.state.emailConfirm} type="text" />
           {errMsg}
-          <Button height={30} width={125} fontSize={16} margin={'15px auto 10px auto'} loading={this.state.loading}>Create</Button>
+          <Button style={{ height: 30, width: 125, fontSize: 16, margin: '15px auto 10px auto' }} loading={this.state.loading}>Create</Button>
           <div className={UserCreatePageStyles.cancel}>
             <Link to='/'>Cancel Log In</Link>
           </div>
