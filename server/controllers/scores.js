@@ -2,6 +2,13 @@ const psql = require('../db')
 const { checkSquare } = require('../data/minesweeperData')
 
 async function submitScore(req, res, next) {
+  if (!(req.body.difficulty === "Easy" || req.body.difficulty === "Normal" || req.body.difficulty === "Hard")) {
+    return res.json({ "message": "Score not submitted" })
+  } else if (isNaN(req.body.time) || isNaN(req.userId)) {
+    return res.json({ "message": "Score not submitted" })
+  }
+
+
   if (checkSquare(req.session.id, req.body.gridId)) {
     try {
       const query = `INSERT INTO scores (difficulty, time, user_id) VALUES ($1, $2, $3)`;
@@ -21,6 +28,10 @@ async function submitScore(req, res, next) {
 }
 
 async function listScores(req, res, next) {
+  if (!(req.query.difficulty === "Easy" || req.query.difficulty === "Normal" || req.query.difficulty === "Hard")) {
+    return res.json({ "message": "Query not allowed" })
+  }
+
   try {
     const query = "SELECT scores.id, username, time, difficulty FROM scores INNER JOIN users ON scores.user_id = users.id WHERE difficulty=$1 ORDER BY time LIMIT 10";
     const values = [req.query.difficulty];
