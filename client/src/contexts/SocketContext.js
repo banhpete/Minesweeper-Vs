@@ -9,7 +9,7 @@ class SocketContextProvider extends Component {
   state = { totalConnections: 0 }
 
   componentDidMount = () => {
-    socket = io('http://localhost:3000')
+    socket = io()
     socket.on('totalConnections', (data) => { this.setState({ totalConnections: data.totalConnections }) })
   }
 
