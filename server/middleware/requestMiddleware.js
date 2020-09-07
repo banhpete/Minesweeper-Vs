@@ -2,10 +2,8 @@ function checkOrigin(req, res, next) {
   if (req.headers.origin === process.env.ORIGIN) {
     next();
   } else {
-    console.log(req.headers.origin);
-    console.log(process.env.ORIGIN)
-    let error = new Error("Cannot not process request, orign is: " + req.headers.origin + ". Expected: " + process.env.ORIGIN);
-    res.status(400);
+    let error = new Error("Cannot not process request");
+    error.statusCode = 400;
     next(error);
   }
 }
