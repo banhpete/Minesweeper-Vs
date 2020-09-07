@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "set NODE_ENV=development&& nodemon socketServer.js",
-    "start-prod": "set NODE_ENV=production&& node socketServer.js",
+    "start-prod": "set NODE_ENV=production&& npm run migrate up && node socketServer.js",
     "migrate": "./node_modules/.bin/node-pg-migrate"
   },
   "author": "",
