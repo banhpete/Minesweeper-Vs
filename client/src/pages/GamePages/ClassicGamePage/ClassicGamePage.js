@@ -23,7 +23,7 @@ class ClassicGamePage extends Component {
   componentDidMount = () => {
     if (this.props.location.state) {
       this.props.history.replace(this.props.location.pathname, undefined)
-      submitScore(this.context.time, this.context.difficulty)
+      submitScore(this.context.time, this.context.difficulty, this.context.gridId)
       this.setState({
         msg: "Your score was submitted"
       })
@@ -113,6 +113,7 @@ class ClassicGamePage extends Component {
             playerWinStatus={this.gameMaster.providePlayerWinStatus()}
             time={this.gameMaster.provideTime()}
             diff={this.gameMaster.provideDiff()}
+            gridId={this.gameMaster.provideGridId()}
           /> :
           null}
       </div>

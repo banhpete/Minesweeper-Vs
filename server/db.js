@@ -1,4 +1,4 @@
-const { Client } = require('pg')
+const { Pool } = require('pg')
 
 let connectionDetails = {};
 
@@ -18,8 +18,8 @@ if (process.env.NODE_ENV === "development") {
   }
 }
 
-const client = new Client(connectionDetails)
+const psql = new Pool(connectionDetails)
 
-client.connect()
+psql.connect()
 
-module.exports = client
+module.exports = psql

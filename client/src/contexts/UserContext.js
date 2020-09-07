@@ -4,7 +4,7 @@ import { userGet, userLogoff } from '../utils/userServices'
 export const UserContext = createContext()
 
 class UserContextProvider extends React.Component {
-  state = { username: userGet(), time: 0, difficulty: '' }
+  state = { username: userGet(), time: 0, difficulty: '', gridId: '' }
 
   userLogin = (token) => {
     this.setState({ username: userGet() })
@@ -15,10 +15,11 @@ class UserContextProvider extends React.Component {
     this.setState({ username: "" })
   }
 
-  saveTime = (time, difficulty) => {
+  saveTime = (time, difficulty, gridId) => {
     this.setState({
       time,
-      difficulty
+      difficulty,
+      gridId
     })
   }
 

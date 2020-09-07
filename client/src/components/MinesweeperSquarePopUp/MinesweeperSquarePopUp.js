@@ -11,9 +11,9 @@ const MinesweeperSquarePopUp = (props) => {
   useEffect(() => {
     if (props.playerWinStatus) {
       if (user.username) {
-        submitScore(props.time, props.diff)
+        submitScore(props.time, props.diff, props.gridId)
       } else {
-        user.saveTime(props.time, props.diff)
+        user.saveTime(props.time, props.diff, props.gridId)
       }
     }
   }, [])

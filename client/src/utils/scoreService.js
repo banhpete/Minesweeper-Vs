@@ -1,7 +1,7 @@
 import { tokenGet } from './tokenServices'
 const BASE_URL = "/scores"
 
-async function submitScore(time, difficulty) {
+async function submitScore(time, difficulty, gridId) {
   const response = await fetch(BASE_URL, {
     method: "POST",
     headers: {
@@ -10,7 +10,8 @@ async function submitScore(time, difficulty) {
     },
     body: JSON.stringify({
       time,
-      difficulty
+      difficulty,
+      gridId
     })
   })
   const responseData = await response.json()

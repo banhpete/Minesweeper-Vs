@@ -1,3 +1,5 @@
+const BASE_URL = '/minesweeper'
+
 function gameMasterGen() {
   /* -------- GameSettings -------- */
   const gameSettings = {
@@ -22,6 +24,7 @@ function gameMasterGen() {
   var gameStartTime;
   var gameEndTime;
   var diff;
+  var gridId;
 
   /* ---- Private Functions ------------------------------------------------------------------------------------------------ */
   // Function to check surrounding area of one cell and run function at each cell. Used as part of different functions.
@@ -95,11 +98,24 @@ function gameMasterGen() {
     })
   }
 
+  async function saveId() {
+    const response = await fetch(BASE_URL + '/save', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ valueGrid })
+    })
+    const responseData = await response.json()
+    gridId = responseData.gridId
+  }
+
   /* ---- Public Functions ------------------------------------------------------------------------------------------------ */
   function cellClick(y, x, cb) {
     if (!gameStartTime) {
       gameStartTime = Date.now();
       moveMines(y, x);
+      saveId();
     }
     if (!gameEnd && gameGrid[y][x] === "") {
       if (valueGrid[y][x] === -1) {
@@ -145,7 +161,7 @@ function gameMasterGen() {
       numOfMines = gameSettings[diff].numOfMines;
     }
     remainingSquares = gameSettings[diff].gridX * gameSettings[diff].gridY - numOfMines;
-    const response = await fetch('/minesweeper', {
+    const response = await fetch(BASE_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -188,6 +204,10 @@ function gameMasterGen() {
     return Math.floor((gameEndTime - gameStartTime) / 1000)
   }
 
+  function provideGridId() {
+    return gridId
+  }
+
   /* ---- Test Function Only for Development ------------------------------------------------------------------------------------------------ */
   if (process.env.NODE_ENV === 'development') {
     var gridTest = (arr) => {
@@ -220,7 +240,7 @@ function gameMasterGen() {
     }
   }
 
-  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, provideTime, cellClick, cellRightClick, gridGen }
+  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, provideTime, provideGridId, cellClick, cellRightClick, gridGen }
 }
 
 export default gameMasterGen

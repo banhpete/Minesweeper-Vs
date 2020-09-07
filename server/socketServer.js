@@ -2,7 +2,7 @@ const http = require('http')
 const app = require('./server')
 const socketio = require('socket.io')
 
-const socketServerData = require('./socketServerData')
+const socketServerData = require('./data/socketServerData')
 
 const server = http.createServer(app)
 const io = socketio(server)

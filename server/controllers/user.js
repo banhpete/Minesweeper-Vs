@@ -1,4 +1,4 @@
-const psqlClient = require('../db')
+const psql = require('../db')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const saltRounds = 8;
@@ -35,7 +35,7 @@ async function userCreate(req, res, next) {
   try {
     const query = 'INSERT INTO users (username, password, email) VALUES ($1, $2, $3)'
     const values = [req.body.username, passwordHash, req.body.email]
-    const newUser = await psqlClient.query(query, values)
+    const newUser = await psql.query(query, values)
 
     const token = createJWT(req.body.username)
 
@@ -74,7 +74,7 @@ async function userLogin(req, res, next) {
   try {
     const query = "SELECT username, password FROM users WHERE username=$1"
     const values = [req.body.username]
-    user = await psqlClient.query(query, values)
+    user = await psql.query(query, values)
   } catch (error) {
     return next(error)
   }
@@ -106,7 +106,7 @@ async function authUser(req, res, next) {
         try {
           const query = `SELECT id FROM users where username=$1`
           const values = [req.username];
-          const data = await psqlClient.query(query, values)
+          const data = await psql.query(query, values)
           req.userId = data.rows[0].id
         } catch (err) {
           const error = new Error("Issue with the database")

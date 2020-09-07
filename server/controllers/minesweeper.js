@@ -1,3 +1,5 @@
+const { addSquare } = require('../data/minesweeperData');
+
 const gameSetting = {
   Easy: {
     gridX: 10, gridY: 8, numOfMines: 10, squareSize: 60
@@ -56,4 +58,13 @@ function gridGen(req, res, next) {
   res.json(gridValues)
 }
 
-module.exports = { gridGen }
+function save(req, res, next) {
+  var gridId = ""
+  req.body.valueGrid.forEach((row) => {
+    gridId = gridId + row[0];
+  })
+  addSquare(req.session.id, gridId)
+  res.send(JSON.stringify({ gridId }))
+}
+
+module.exports = { gridGen, save }
