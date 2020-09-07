@@ -4,7 +4,7 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-build": "cd ./server && npm i && npm start-prod",
+    "heroku-build": "cd ./server && npm i && npm run start-prod",
     "heroku-postbuild": "cd ./client && npm i && npm run build"
   },
   "repository": {
