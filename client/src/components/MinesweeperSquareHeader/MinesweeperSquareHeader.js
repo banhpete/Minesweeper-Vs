@@ -11,7 +11,7 @@ const MinesweeperSquareHeader = React.memo((props) => {
       <Button onClick={props.handleReset}>
         Reset
       </Button>
-      <Timer timeStatus={props.timeStatus} />
+      <Timer time={props.time} timeStatus={props.timeStatus} />
     </div>
   );
 })

@@ -35,7 +35,7 @@ class Timer extends Component {
 
   render() {
     return (
-      <p>Time: {this.state.time}s</p>
+      <p>Time: {this.props.timeStatus === "start" ? this.state.time : this.props.time}s</p>
     );
   }
 }

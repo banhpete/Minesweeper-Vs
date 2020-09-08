@@ -120,6 +120,7 @@ function gameMasterGen() {
     if (!gameEnd && gameGrid[y][x] === "") {
       if (valueGrid[y][x] === -1) {
         gameEnd = true;
+        gameEndTime = Date.now();
         gameGrid[y][x] = valueGrid[y][x]
         cb();
         return
