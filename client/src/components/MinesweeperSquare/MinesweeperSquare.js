@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MinesweeperSquareStyles from './MinesweeperSquare.module.css'
 import MinesweeperCell from '../MinesweeperCell/MinesweeperCell';
 
 const MinesweeperSquare = React.memo((props) => {
+  const [mobileStatus, toggleMobile] = useState(false)
+
   /* ---- Select Side Length ------------------------------------------------------------------------------------------------ */
   var side;
-  if (props.diff === "Easy") { side = 60 }
-  else if (props.diff === "Normal") { side = 33.33 }
-  else if (props.diff === "Hard") { side = 25 }
+  if (props.diff === "Easy") { side = mobileStatus ? 35 : 60 }
+  else if (props.diff === "Normal") { side = mobileStatus ? 19.44 : 33.33 }
+  else if (props.diff === "Hard") { side = mobileStatus ? 14.58 : 25 }
 
   /* ---- Create Cells ------------------------------------------------------------------------------------------------ */
   var Cells = []
@@ -24,6 +26,19 @@ const MinesweeperSquare = React.memo((props) => {
         </MinesweeperCell>)
     }
   }
+
+  useEffect(() => {
+    const testResize = (e) => {
+      if (e.target.outerWidth < 600) {
+        toggleMobile(true)
+      } else if (mobileStatus) {
+        toggleMobile(false)
+      }
+    }
+
+    window.addEventListener('resize', testResize);
+    return () => { window.removeEventListener('resize', testResize) }
+  })
 
   return (
     <div className={MinesweeperSquareStyles.Square}>
