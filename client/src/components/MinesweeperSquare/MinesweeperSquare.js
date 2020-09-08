@@ -36,6 +36,10 @@ const MinesweeperSquare = React.memo((props) => {
       }
     }
 
+    if (window.outerWidth <= 600) {
+      toggleMobile(true)
+    }
+
     window.addEventListener('resize', testResize);
     return () => { window.removeEventListener('resize', testResize) }
   })
