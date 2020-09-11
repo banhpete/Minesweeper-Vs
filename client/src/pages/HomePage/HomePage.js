@@ -6,11 +6,14 @@ import SpecialButton from '../../components/SpecialButton/SpecialButton';
 import GameTitle from '../../components/GameTitle/GameTitle';
 import { UserContext } from '../../contexts/UserContext';
 import { SocketContext } from '../../contexts/SocketContext';
+import PopupMenu from '../../components/PopupMenu/PopupMenu';
 
 const HomePage = () => {
   const [specialButtonsState, setSpecialButtonsState] = useState([false, false, false])
   const [loading, setLoading] = useState(false)
   const [userMsg, setUserMsg] = useState("Currently Playing as Anonymous Mine Sweeper")
+  const [popupMenuState, togglePopupMenu] = useState(false)
+  const [gameMode, setGameMode] = useState('')
   const { username, userLogoff } = useContext(UserContext)
   const { totalConnections } = useContext(SocketContext)
 
@@ -41,6 +44,7 @@ const HomePage = () => {
 
   return (
     <div onClick={(e) => { e.stopPropagation(); changeButtonState() }} className={HomePageStyles.HomePage}>
+
       <GameTitle title="Minesweeper Vs." subtitle="Online Minesweeper Multiplayer" />
       <div className={HomePageStyles.authContainer}>
         {username ?
@@ -60,7 +64,8 @@ const HomePage = () => {
       <div className={HomePageStyles.menuContainer}>
         <h4 className={HomePageStyles.menuTitle}>Pick a Game Mode</h4>
         <Link to="/game/classic"><Button style={{ height: 50, width: 300, margin: 10, fontSize: 18 }} loading={loading}>Classic Minesweeper (1P)</Button></Link>
-        <SpecialButton
+        <Button onClick={() => { setGameMode('Minehunter'); togglePopupMenu(!popupMenuState) }} style={{ height: 50, width: 300, margin: 10, fontSize: 18 }} loading={loading}>Minehunter (2P)</Button>
+        {/* <SpecialButton
           height={50}
           width={300}
           margin={8}
@@ -113,9 +118,10 @@ const HomePage = () => {
             </>
           }>
           Minehunter Galore (2P)
-        </SpecialButton>
+        </SpecialButton> */}
       </div>
-    </div >
+      {popupMenuState && <PopupMenu onClick={() => togglePopupMenu(!popupMenuState)} gameMode={gameMode} />}
+    </div>
   );
 }
 
