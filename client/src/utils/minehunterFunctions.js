@@ -114,22 +114,20 @@ function gameMasterGen() {
   function cellClick(y, x, cb) {
     if (!gameEnd && gameGrid[y][x] === "") {
       if (valueGrid[y][x] === -1) {
-        gameEnd = true;
-        gameEndTime = Date.now();
         gameGrid[y][x] = valueGrid[y][x]
-        cb();
+        cb(true);
         return
       }
       if (valueGrid[y][x] > 0) {
         gameGrid[y][x] = valueGrid[y][x]
         remainingSquares--;
         didPlayerWin();
-        cb()
+        cb(false)
         return
       }
       floodFill(y, x)
       didPlayerWin();
-      cb(valueGrid)
+      cb(false)
       return
     }
     return
@@ -156,7 +154,7 @@ function gameMasterGen() {
       diff = newDiff;
       numOfMines = gameSettings[diff].numOfMines;
     }
-    remainingSquares = gameSettings[diff].gridX * gameSettings[diff].gridY - numOfMines;
+    remainingSquares = gameSettings[diff].gridX * gameSettings[diff].gridY;
     const response = await fetch(BASE_URL, {
       method: 'POST',
       headers: {
@@ -212,6 +210,7 @@ function gameMasterGen() {
     valueGrid = grid;
     diff = newDiff;
     numOfMines = gameSettings[diff].numOfMines;
+    remainingSquares = gameSettings[diff].gridX * gameSettings[diff].gridY;
     gameGrid = [];
     for (let i = 0; i < valueGrid.length; i++) {
       let gameGridRow = [];

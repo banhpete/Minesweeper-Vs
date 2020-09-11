@@ -52,13 +52,15 @@ class SocketContextProvider extends Component {
     })
 
     // Receiving cell click
-    socket.on('cell-click', (i, j) => {
+    socket.on('cell-click', (i, j, playerContinue) => {
       console.log('cell clicked:', i, j)
-      let nextPlayerTurn = '';
-      if (this.state.playerTurn === 'player1') {
-        nextPlayerTurn = 'player2'
-      } else {
-        nextPlayerTurn = 'player1'
+      let nextPlayerTurn = this.state.playerTurn;
+      if (!playerContinue) {
+        if (this.state.playerTurn === 'player1') {
+          nextPlayerTurn = 'player2'
+        } else {
+          nextPlayerTurn = 'player1'
+        }
       }
       this.setState({
         prevClick: [i, j],
@@ -115,17 +117,19 @@ class SocketContextProvider extends Component {
     })
   }
 
-  cellClick = (i, j) => {
-    socket.emit('cell-click', this.state.roomId, i, j);
-    let nextPlayerTurn = '';
-    if (this.state.playerTurn === 'player1') {
-      nextPlayerTurn = 'player2'
-    } else {
-      nextPlayerTurn = 'player1'
+  cellClick = (i, j, playerContinue) => {
+    socket.emit('cell-click', this.state.roomId, i, j, playerContinue);
+    if (!playerContinue) {
+      let nextPlayerTurn = '';
+      if (this.state.playerTurn === 'player1') {
+        nextPlayerTurn = 'player2'
+      } else {
+        nextPlayerTurn = 'player1'
+      }
+      this.setState({
+        playerTurn: nextPlayerTurn
+      })
     }
-    this.setState({
-      playerTurn: nextPlayerTurn
-    })
   }
 
   removeClick = () => {

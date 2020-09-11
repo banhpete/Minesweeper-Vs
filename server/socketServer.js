@@ -44,8 +44,8 @@ io.on('connect', (socket) => {
   })
 
   // Handle cell click
-  socket.on('cell-click', (roomId, i, j) => {
-    socket.in(roomId).emit('cell-click', i, j)
+  socket.on('cell-click', (roomId, i, j, playerContinue) => {
+    socket.in(roomId).emit('cell-click', i, j, playerContinue)
   })
 
   // Handle disconnects

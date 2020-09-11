@@ -81,8 +81,8 @@ class MinehunterPage extends Component {
 
   handleSquareClick = (i, j) => {
     if (this.context.playerTurn === this.context.player) {
-      this.context.cellClick(i, j)
-      this.gameMaster.cellClick(i, j, () => {
+      this.gameMaster.cellClick(i, j, (playerContinue) => {
+        this.context.cellClick(i, j, playerContinue)
         if (this.gameMaster.provideGameEnd()) {
           this.setState({
             //Time stop
