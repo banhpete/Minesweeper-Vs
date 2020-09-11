@@ -72,10 +72,10 @@ class UserLoginPage extends Component {
         <form className={UserLoginPageStyles.window} onSubmit={this.handleSubmit}>
           <h3 className={UserLoginPageStyles.windowTitle}> Log in to Minesweeper Vs.</h3>
           <p className={UserLoginPageStyles.windowSubTitle}>Username:</p>
-          <TypingInput handleChange={this.handleChange} name="username" type="text" value={this.state.username} />
+          <TypingInput onChange={this.handleChange} name="username" type="text" value={this.state.username} />
           <p className={UserLoginPageStyles.windowText}>Forgot Username</p>
           <p className={UserLoginPageStyles.windowSubTitle}>Password:</p>
-          <TypingInput handleChange={this.handleChange} name="password" type="password" value={this.state.password} />
+          <TypingInput onChange={this.handleChange} name="password" type="password" value={this.state.password} />
           <p className={UserLoginPageStyles.windowText}>Forgot Password</p>
           {errMsg}
           <Button style={{ height: 30, width: 125, fontSize: 16, margin: '15px auto 10px auto' }} loading={this.state.loading}>Log In</Button>

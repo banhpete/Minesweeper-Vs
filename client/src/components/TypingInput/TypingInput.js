@@ -7,8 +7,9 @@ const Input = (props) => {
       name={props.name}
       className={InputStyles.Input}
       type={props.type}
+      style={props.style}
       value={props.value}
-      onChange={props.handleChange}
+      onChange={props.onChange}
       autoComplete="off"
     >
     </input>

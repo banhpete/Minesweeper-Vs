@@ -118,15 +118,15 @@ class UserCreatePage extends Component {
         <form onSubmit={this.handleSubmit} className={UserCreatePageStyles.window}>
           <h2 className={UserCreatePageStyles.windowTitle}>Create Account</h2>
           <p className={UserCreatePageStyles.windowSubTitle}>Username:</p>
-          <TypingInput handleChange={this.handleChange} name="username" value={this.state.username} type="text" />
+          <TypingInput onChange={this.handleChange} name="username" value={this.state.username} type="text" />
           <p className={UserCreatePageStyles.windowSubTitle}>Password:</p>
-          <TypingInput handleChange={this.handleChange} name="password" value={this.state.password} type="password" />
+          <TypingInput onChange={this.handleChange} name="password" value={this.state.password} type="password" />
           <p className={UserCreatePageStyles.windowSubTitle}>Confirm Password:</p>
-          <TypingInput handleChange={this.handleChange} name="passwordConfirm" value={this.state.passwordConfirm} type="password" />
+          <TypingInput onChange={this.handleChange} name="passwordConfirm" value={this.state.passwordConfirm} type="password" />
           <p className={UserCreatePageStyles.windowSubTitle}>Email:</p>
-          <TypingInput handleChange={this.handleChange} name="email" value={this.state.email} type="text" />
+          <TypingInput onChange={this.handleChange} name="email" value={this.state.email} type="text" />
           <p className={UserCreatePageStyles.windowSubTitle}>Confirm Email:</p>
-          <TypingInput handleChange={this.handleChange} name="emailConfirm" value={this.state.emailConfirm} type="text" />
+          <TypingInput onChange={this.handleChange} name="emailConfirm" value={this.state.emailConfirm} type="text" />
           {errMsg}
           <Button style={{ height: 30, width: 125, fontSize: 16, margin: '15px auto 10px auto' }} loading={this.state.loading}>Create</Button>
           <div className={UserCreatePageStyles.cancel}>
