@@ -11,7 +11,8 @@ const Button = (props) => {
   return (
     <button
       className={props.activated ? ButtonStyle.ButtonActivated : ButtonStyle.Button}
-      style={props.style} disabled={disabledStatus}
+      style={props.style}
+      disabled={disabledStatus}
       onClick={props.onClick}>
       {props.children}
     </button>
