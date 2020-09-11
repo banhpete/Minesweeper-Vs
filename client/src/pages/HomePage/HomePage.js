@@ -64,7 +64,11 @@ const HomePage = () => {
       <div className={HomePageStyles.menuContainer}>
         <h4 className={HomePageStyles.menuTitle}>Pick a Game Mode</h4>
         <Link to="/game/classic"><Button style={{ height: 50, width: 300, margin: 10, fontSize: 18 }} loading={loading}>Classic Minesweeper (1P)</Button></Link>
-        <Button onClick={() => { setGameMode('Minehunter'); togglePopupMenu(!popupMenuState) }} style={{ height: 50, width: 300, margin: 10, fontSize: 18 }} loading={loading}>Minehunter (2P)</Button>
+        <Button
+          onClick={() => { setGameMode('Minehunter'); togglePopupMenu(!popupMenuState) }}
+          style={{ height: 50, width: 300, margin: 10, fontSize: 18 }}
+          loading={loading}>Minehunter (2P) - WIP
+        </Button>
         {/* <SpecialButton
           height={50}
           width={300}
