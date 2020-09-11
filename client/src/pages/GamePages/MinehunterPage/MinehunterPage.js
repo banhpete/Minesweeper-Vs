@@ -105,14 +105,15 @@ class MinehunterPage extends Component {
   //   })
   // }
 
-  // handleReset = () => {
-  //   this.gameMaster.gridGen(false, () => {
-  //     this.setState({
-  //       timeStatus: "reset",
-  //       forceGridUpdate: !this.state.forceGridUpdate,
-  //     })
-  //   })
-  // }
+  handleReset = () => {
+    this.gameMaster.gridGen(false, (grid, diff) => {
+      this.context.newGrid(grid, diff)
+      this.setState({
+        forceGridUpdate: !this.state.forceGridUpdate,
+        displayScores: false
+      })
+    })
+  }
 
   // handleDisplayScores = () => {
   //   console.log('hello! You clicked me')
@@ -166,6 +167,7 @@ class MinehunterPage extends Component {
         {(this.context.gameStart && (this.gameMaster.provideGameGrid().length !== 0)) &&
           <div className={MinehunterPageStyles.SquareContainer}>
             <MinesweeperSquareHeader
+              handleReset={this.handleReset}
               mines={this.gameMaster.provideNumOfMines()}
             />
             <MinesweeperSquare
