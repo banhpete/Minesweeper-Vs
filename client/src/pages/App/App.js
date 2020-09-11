@@ -10,10 +10,9 @@ import UserContextProvider from '../../contexts/UserContext';
 import SocketContextProvider from '../../contexts/SocketContext';
 import { userGet } from "../../utils/userServices"
 import ClassicGamePage from '../GamePages/ClassicGamePage/ClassicGamePage';
+import MinehunterPage from '../GamePages/MinehunterPage/MinehunterPage';
 
 function App() {
-
-
   return (
     <div className={AppStyles.App}>
       <UserContextProvider>
@@ -24,6 +23,7 @@ function App() {
               <Route exact path="/user/login" render={(props) => (!userGet() ? <UserLoginPage {...props} /> : <HomePage />)} />
               <Route exact path="/user/create" render={(props) => (!userGet() ? <UserCreatePage {...props} /> : <HomePage />)} />
               <Route exact path="/game/classic" render={(props) => <ClassicGamePage {...props} />} />
+              <Route exact path="/game/minehunter" render={(props) => <MinehunterPage {...props} />} />
               <Route path="/" render={(props) => <HomePage />} />
             </Switch>
           </div>

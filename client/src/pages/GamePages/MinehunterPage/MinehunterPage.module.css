@@ -1,0 +1,42 @@
+.ClassicGamePage{
+  position: relative;
+  height:100%;
+}
+
+.Header{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  width:100%;
+  margin: 25px 0 15px 0;
+}
+
+.HeaderTitle{
+  margin:0px;
+  font-size:30px;
+  text-align:center;
+}
+
+.SquareHeader{
+  box-sizing: border-box;
+  border:2px solid black;
+  height:45px;
+  width:602px;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding:0 10px;
+}
+
+.SquareContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.Row{
+  display:flex;
+  justify-content: center;
+}
