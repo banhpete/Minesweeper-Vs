@@ -16,9 +16,11 @@ io.on('connect', (socket) => {
   socket.on('join-room', (roomId, cb) => {
     if (!io.sockets.adapter.rooms[roomId]) {
       socket.join(roomId);
+      socketServerData.addUserToRoom(socket.id, roomId)
       cb('player1')
     } else if (io.sockets.adapter.rooms[roomId].length < 2) {
       socket.join(roomId);
+      socketServerData.addUserToRoom(socket.id, roomId)
       cb('player2')
       io.in(roomId).emit('start-game')
     } else {
@@ -29,14 +31,30 @@ io.on('connect', (socket) => {
   // Handle player leaving room
   socket.on('leave-room', (roomId, cb) => {
     socket.leave(roomId);
+    socketServerData.removeUserFromRoom(socket.id)
+    io.in(roomId).emit('player-end-game')
     cb();
+  })
+
+  // Handle new grid
+  socket.on('new-grid', (roomId, grid, diff) => {
+    console.log(roomId)
+    console.log(io.sockets.adapter.rooms[roomId]);
+    socket.in(roomId).emit('new-grid', grid, diff)
+  })
+
+  // Handle cell click
+  socket.on('cell-click', (roomId, i, j) => {
+    socket.in(roomId).emit('cell-click', i, j)
   })
 
   // Handle disconnects
   socket.on('disconnect', () => {
+    io.in(socketServerData.removeUserFromRoom(socket.id)).emit('player-end-game')
     socketServerData.removeConnection();
-    socket.broadcast.emit('totalConnections', { totalConnections: socketServerData.getConnections() })
+    io.emit('totalConnections', { totalConnections: socketServerData.getConnections() })
   })
+
 })
 
 const PORT = process.env.PORT || 3001

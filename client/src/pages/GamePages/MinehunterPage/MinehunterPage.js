@@ -13,65 +13,89 @@ import gameMasterGen from "../../../utils/minehunterFunctions"
 class MinehunterPage extends Component {
   state = {
     forceGridUpdate: false, // As a result of hidden state we need to use a state and pass down to children to force updates
-    gridSetYet: false,
-    timeStatus: "stop",
     msg: "",
     displayScores: true
   }
 
-  static contextType = SocketContext
-
   /* ---- Hidden State ------------------------------------------------------------------------------------------------ */
   gameMaster = gameMasterGen()
 
+  /* ---- Bring in Context ------------------------------------------------------------------------------------------------ */
+  static contextType = SocketContext
+
   /* ---- Lifecycle ---------------------------------------------------------------------------------------------------- */
+
+  // Redirect if there is no room, or if the room longer than 4 characters or if for whatever reason the socket 
+  // is not yet established (Generally after page refresh). Otherwise join the room!
   componentDidMount = () => {
-    if (!this.props.location.search || !this.context.socketOn || this.props.location.search.length > 12) {
+    if (!this.props.location.search || this.props.location.search.length > 12 || !this.context.socketOn) {
       this.props.history.push('/')
     } else {
       this.context.joinRoom(this.props.location.search.substr(-4, 4))
     }
   }
 
-  componentWillMount = () => {
+  // Handle components leaving the room
+  componentWillUnmount = () => {
+    console.log('unmount')
     if (this.context.socketOn) {
+      console.log('leave room')
       this.context.leaveRoom()
     }
   }
 
-  /* ---- Event Methods ------------------------------------------------------------------------------------------------ */
-  handleDiffChange = (e) => {
-    this.gameMaster.gridGen(e.target.value, (grid) => {
+  // Handle context update
+  componentDidUpdate = () => {
+    if (this.context.tempGrid.length !== 0) {
+      console.log("I Shouldn't be here")
+      this.gameMaster.giveGrid(this.context.tempGrid, this.context.tempDiff);
+      this.context.removeGrid();
+    }
 
+    console.log('componentDidUpdate:', this.context.prevClick);
+
+    if (this.context.prevClick) {
+      console.log('removing preClick:');
+      this.gameMaster.cellClick(this.context.prevClick[0], this.context.prevClick[1], () => {
+        this.context.removeClick()
+        this.setState({
+          //Time stop
+          forceGridUpdate: !this.state.forceGridUpdate
+        })
+      });
+    }
+  }
+
+  /* ---- Event Methods ------------------------------------------------------------------------------------------------ */
+
+  // Difficulty selected and grid is generated. Anytime a new grid emit to socket server to have player 2 receive grid.
+  handleDiffChange = (e) => {
+    this.gameMaster.gridGen(e.target.value, (grid, diff) => {
+      this.context.newGrid(grid, diff)
       this.setState({
-        timeStatus: 'reset',
         forceGridUpdate: !this.state.forceGridUpdate,
         displayScores: false
       })
     })
   }
 
-  // handleSquareClick = (i, j) => {
-  //   this.gameMaster.cellClick(i, j, (grid) => {
-  //     if (!this.state.gridSetYet) {
-  //       this.setState({
-  //         gridSetYet: true
-  //       })
-  //       this.context.setGrid(grid)
-  //     }
-  //     this.context.sendMessage();
-  //     if (this.gameMaster.provideGameEnd()) {
-  //       this.setState({
-  //         timeStatus: 'stop',
-  //         forceGridUpdate: !this.state.forceGridUpdate
-  //       })
-  //     } else {
-  //       this.setState({
-  //         forceGridUpdate: !this.state.forceGridUpdate
-  //       })
-  //     }
-  //   });
-  // }
+  handleSquareClick = (i, j) => {
+    if (this.context.playerTurn === this.context.player) {
+      this.context.cellClick(i, j)
+      this.gameMaster.cellClick(i, j, () => {
+        if (this.gameMaster.provideGameEnd()) {
+          this.setState({
+            //Time stop
+            forceGridUpdate: !this.state.forceGridUpdate
+          })
+        } else {
+          this.setState({
+            forceGridUpdate: !this.state.forceGridUpdate
+          })
+        }
+      });
+    }
+  }
 
   // handleSquareRightClick = (i, j) => {
   //   this.gameMaster.cellRightClick(i, j, () => {
@@ -97,7 +121,7 @@ class MinehunterPage extends Component {
   //   })
   // }
 
-  loadRow1 = () => {
+  loadRow = () => {
     if (this.context.gameStart) {
       if (this.context.player === "player1") {
         return (
@@ -109,10 +133,12 @@ class MinehunterPage extends Component {
           />
         )
       } else {
-        if (this.gameMaster.provideGameGrid.length === 0) {
+        let diff = this.gameMaster.provideDiff();
+        console.log('diff:', diff)
+        if (!diff) {
           return (<p>Waiting for player 1 to select Game Difficulty</p>)
         } else {
-          return (<p>Difficulty has been selected</p>)
+          return (<p>{`${diff} Mode - ${this.context.playerTurn}'s Turn`}</p>)
         }
       }
     } else {
@@ -129,11 +155,25 @@ class MinehunterPage extends Component {
     return (
       <div className={MinehunterPageStyles.MinehunterPage}>
         <GameTitle title="Mine Hunter Mode" />
+
         <div className={MinehunterPageStyles.Row}>
-          {this.loadRow1()}
+          {this.loadRow()}
         </div>
 
-
+        {(this.context.gameStart && (this.gameMaster.provideGameGrid().length !== 0)) &&
+          <div className={MinehunterPageStyles.SquareContainer}>
+            <MinesweeperSquareHeader
+              mines={this.gameMaster.provideNumOfMines()}
+            />
+            <MinesweeperSquare
+              forceGridUpdate={this.state.forceGridUpdate}
+              handleSquareClick={this.handleSquareClick}
+              handleSquareRightClick={this.handleSquareRightClick}
+              diff={this.gameMaster.provideDiff()}
+              gameGrid={this.gameMaster.provideGameGrid()}
+            />
+          </div>
+        }
 
         {/* {(this.gameMaster.provideDiff() && !this.state.displayScores) &&
           <>

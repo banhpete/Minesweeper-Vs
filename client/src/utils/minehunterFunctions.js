@@ -112,11 +112,6 @@ function gameMasterGen() {
 
   /* ---- Public Functions ------------------------------------------------------------------------------------------------ */
   function cellClick(y, x, cb) {
-    if (!gameStartTime) {
-      gameStartTime = Date.now();
-      moveMines(y, x);
-      saveId();
-    }
     if (!gameEnd && gameGrid[y][x] === "") {
       if (valueGrid[y][x] === -1) {
         gameEnd = true;
@@ -178,7 +173,7 @@ function gameMasterGen() {
       }
       gameGrid.push(gameGridRow)
     }
-    cb()
+    cb(valueGrid, diff)
   }
 
   function providePlayerWinStatus() {
@@ -207,6 +202,24 @@ function gameMasterGen() {
 
   function provideGridId() {
     return gridId
+  }
+
+  function giveGrid(grid, newDiff) {
+    gameEnd = false;
+    playerWin = false;
+    gameStartTime = null;
+    gameEndTime = null;
+    valueGrid = grid;
+    diff = newDiff;
+    numOfMines = gameSettings[diff].numOfMines;
+    gameGrid = [];
+    for (let i = 0; i < valueGrid.length; i++) {
+      let gameGridRow = [];
+      for (let j = 0; j < valueGrid[0].length; j++) {
+        gameGridRow.push("")
+      }
+      gameGrid.push(gameGridRow)
+    }
   }
 
   /* ---- Test Function Only for Development ------------------------------------------------------------------------------------------------ */
@@ -241,7 +254,7 @@ function gameMasterGen() {
     }
   }
 
-  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, provideTime, provideGridId, cellClick, cellRightClick, gridGen }
+  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, provideTime, provideGridId, giveGrid, cellClick, cellRightClick, gridGen }
 }
 
 export default gameMasterGen
