@@ -18,7 +18,6 @@ class SocketContextProvider extends Component {
 
     tempGrid: [],
     tempDiff: ''
-
   }
 
   /* ---- Socket Event Handlers ------------------------------------------------------------------------------------------------ */

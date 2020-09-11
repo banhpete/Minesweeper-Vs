@@ -56,7 +56,7 @@ class MinehunterPage extends Component {
 
     if (this.context.prevClick) {
       console.log('removing preClick:');
-      this.gameMaster.cellClick(this.context.prevClick[0], this.context.prevClick[1], () => {
+      this.gameMaster.cellClick(this.context.prevClick[0], this.context.prevClick[1], this.context.playerTurn, () => {
         this.context.removeClick()
         this.setState({
           //Time stop
@@ -81,7 +81,7 @@ class MinehunterPage extends Component {
 
   handleSquareClick = (i, j) => {
     if (this.context.playerTurn === this.context.player) {
-      this.gameMaster.cellClick(i, j, (playerContinue) => {
+      this.gameMaster.cellClick(i, j, this.context.player, (playerContinue) => {
         this.context.cellClick(i, j, playerContinue)
         if (this.gameMaster.provideGameEnd()) {
           this.setState({
@@ -168,7 +168,7 @@ class MinehunterPage extends Component {
           <div className={MinehunterPageStyles.SquareContainer}>
             <MinesweeperSquareHeader
               handleReset={this.handleReset}
-              mines={this.gameMaster.provideNumOfMines()}
+              mines={this.gameMaster.provideScore(this.context.player)}
             />
             <MinesweeperSquare
               forceGridUpdate={this.state.forceGridUpdate}

@@ -19,12 +19,10 @@ function gameMasterGen() {
   var gameGrid = [];
   var gameEnd = false;
   var numOfMines;
-  var remainingSquares;
   var playerWin = false;
-  var gameStartTime;
-  var gameEndTime;
   var diff;
   var gridId;
+  var gameScore = { player1: 0, player2: 0 };
 
   /* ---- Private Functions ------------------------------------------------------------------------------------------------ */
   // Function to check surrounding area of one cell and run function at each cell. Used as part of different functions.
@@ -43,12 +41,10 @@ function gameMasterGen() {
   // Propagate the uncovering of cells that are empty
   function floodFill(y, x) {
     gameGrid[y][x] = valueGrid[y][x]
-    remainingSquares--;
     checkSurroundings(y, x, function (y2, x2) {
       if (gameGrid[y2][x2] === "" && valueGrid[y2][x2] !== -1) {
         if (valueGrid[y2][x2] > 0) {
           gameGrid[y2][x2] = valueGrid[y2][x2]
-          remainingSquares--;
         } else {
           floodFill(y2, x2)
         }
@@ -58,10 +54,8 @@ function gameMasterGen() {
 
   // Logic to check if player won or not
   function didPlayerWin() {
-    if (remainingSquares === 0) {
+    if (gameScore['player1'] === (numOfMines / 2) || gameScore['player2'] === (numOfMines / 2)) {
       gameEnd = true;
-      playerWin = true;
-      gameEndTime = Date.now();
     }
   }
 
@@ -111,16 +105,17 @@ function gameMasterGen() {
   }
 
   /* ---- Public Functions ------------------------------------------------------------------------------------------------ */
-  function cellClick(y, x, cb) {
+  function cellClick(y, x, player, cb) {
     if (!gameEnd && gameGrid[y][x] === "") {
       if (valueGrid[y][x] === -1) {
         gameGrid[y][x] = valueGrid[y][x]
+        gameScore[player] += 1;
         cb(true);
+        didPlayerWin()
         return
       }
       if (valueGrid[y][x] > 0) {
         gameGrid[y][x] = valueGrid[y][x]
-        remainingSquares--;
         didPlayerWin();
         cb(false)
         return
@@ -148,13 +143,11 @@ function gameMasterGen() {
   async function gridGen(newDiff, cb) {
     gameEnd = false;
     playerWin = false;
-    gameStartTime = null;
-    gameEndTime = null;
     if (newDiff) {
       diff = newDiff;
       numOfMines = gameSettings[diff].numOfMines;
     }
-    remainingSquares = gameSettings[diff].gridX * gameSettings[diff].gridY;
+    gameScore = { player1: 0, player2: 0 };
     const response = await fetch(BASE_URL, {
       method: 'POST',
       headers: {
@@ -172,6 +165,23 @@ function gameMasterGen() {
       gameGrid.push(gameGridRow)
     }
     cb(valueGrid, diff)
+  }
+
+  function giveGrid(grid, newDiff) {
+    gameEnd = false;
+    playerWin = false;
+    valueGrid = grid;
+    diff = newDiff;
+    numOfMines = gameSettings[diff].numOfMines;
+    gameGrid = [];
+    gameScore = { player1: 0, player2: 0 };
+    for (let i = 0; i < valueGrid.length; i++) {
+      let gameGridRow = [];
+      for (let j = 0; j < valueGrid[0].length; j++) {
+        gameGridRow.push("")
+      }
+      gameGrid.push(gameGridRow)
+    }
   }
 
   function providePlayerWinStatus() {
@@ -194,31 +204,12 @@ function gameMasterGen() {
     return diff;
   }
 
-  function provideTime() {
-    return Math.floor((gameEndTime - gameStartTime) / 1000)
-  }
-
   function provideGridId() {
     return gridId
   }
 
-  function giveGrid(grid, newDiff) {
-    gameEnd = false;
-    playerWin = false;
-    gameStartTime = null;
-    gameEndTime = null;
-    valueGrid = grid;
-    diff = newDiff;
-    numOfMines = gameSettings[diff].numOfMines;
-    remainingSquares = gameSettings[diff].gridX * gameSettings[diff].gridY;
-    gameGrid = [];
-    for (let i = 0; i < valueGrid.length; i++) {
-      let gameGridRow = [];
-      for (let j = 0; j < valueGrid[0].length; j++) {
-        gameGridRow.push("")
-      }
-      gameGrid.push(gameGridRow)
-    }
+  function provideScore(player) {
+    return gameScore[player]
   }
 
   /* ---- Test Function Only for Development ------------------------------------------------------------------------------------------------ */
@@ -253,7 +244,19 @@ function gameMasterGen() {
     }
   }
 
-  return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, provideTime, provideGridId, giveGrid, cellClick, cellRightClick, gridGen }
+  return {
+    provideGameGrid,
+    provideNumOfMines,
+    provideGameEnd,
+    providePlayerWinStatus,
+    provideDiff,
+    provideGridId,
+    provideScore,
+    giveGrid,
+    cellClick,
+    cellRightClick,
+    gridGen
+  }
 }
 
 export default gameMasterGen
