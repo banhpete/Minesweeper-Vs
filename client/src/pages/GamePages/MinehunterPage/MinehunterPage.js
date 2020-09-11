@@ -125,12 +125,15 @@ class MinehunterPage extends Component {
     if (this.context.gameStart) {
       if (this.context.player === "player1") {
         return (
-          <Select
-            initial={"Select a Difficulty to Start"}
-            options={['Easy', 'Normal', 'Hard']}
-            style={{ display: "block", margin: '15px auto' }}
-            handleChange={this.handleDiffChange}
-          />
+          <>
+            <Select
+              initial={"Select a Difficulty to Start"}
+              options={['Easy', 'Normal', 'Hard']}
+              style={{ display: "block", margin: '15px 5px' }}
+              handleChange={this.handleDiffChange}
+            />
+            {this.context.playerTurn && <p> - {`${this.context.playerTurn}'s Turn`}</p>}
+          </>
         )
       } else {
         let diff = this.gameMaster.provideDiff();
