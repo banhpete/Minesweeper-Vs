@@ -4,4 +4,12 @@
   position:relative;
   bottom: 0px;
   background:black;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  color:white;
+}
+
+.Footer * {
+  margin:0 10px;
 }
