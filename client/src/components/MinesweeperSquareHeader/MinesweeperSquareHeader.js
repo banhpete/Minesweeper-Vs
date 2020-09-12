@@ -28,7 +28,7 @@ const MinesweeperSquareHeader = React.memo((props) => {
 }, checkProps)
 
 function checkProps(prevProps, nextProps) {
-  if (nextProps.gameScores || nextProps.timeStatus != prevProps.timeStatus) {
+  if (nextProps.gameScores || nextProps.timeStatus !== prevProps.timeStatus) {
     return false;
   }
   return true
