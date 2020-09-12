@@ -1,7 +1,7 @@
 .Footer {  
   width:calc(100% - 2px);
   min-height:50px;
-  border:1px solid;
   position:relative;
   bottom: 0px;
+  background:black;
 }

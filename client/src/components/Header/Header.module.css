@@ -1,10 +1,9 @@
 .Header {
   width:calc(100% - 2px);
   min-height:50px;
-  border:1px solid;
   display:flex;
   justify-content: center;
-
+  background:black;
 }
 
 .titleCenter{
@@ -14,5 +13,6 @@
 }
 
 .title{
+  color:white;
   margin:0px;
 }
