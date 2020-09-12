@@ -54,7 +54,9 @@ function gameMasterGen() {
 
   // Logic to check if player won or not
   function didPlayerWin() {
-    if (gameScores['player1'] === ((numOfMines / 2) + 1) || gameScores['player2'] === ((numOfMines / 2) + 1)) {
+    if (gameScores['player1'] === ((numOfMines / 2) + 1)
+      || gameScores['player2'] === ((numOfMines / 2) + 1)
+      || gameScores['player1'] + gameScores['player2'] === numOfMines) {
       gameEnd = true;
     }
   }

@@ -38,8 +38,12 @@ const MinesweeperSquarePopUp = (props) => {
 
   // Minehunter Display
   if (props.gameScores) {
-    let playerWon = props.gameScores['player1'] > props.gameScores['player2'] ? 'Player 1' : 'Player 2'
-    popUpContent = popUpContent = <h3 className={MinesweeperSquarePopUpStyles.PopupTxt}>{playerWon} Won!</h3>
+    if (props.gameScores['player1'] === props.gameScores['player2']) {
+      popUpContent = <h3 className={MinesweeperSquarePopUpStyles.PopupTxt}>Tie Game</h3>
+    } else {
+      let playerWon = props.gameScores['player1'] > props.gameScores['player2'] ? 'Player 1' : 'Player 2'
+      popUpContent = <h3 className={MinesweeperSquarePopUpStyles.PopupTxt}>{playerWon} Won!</h3>
+    }
   }
 
   return (
