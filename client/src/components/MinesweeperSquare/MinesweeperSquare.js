@@ -21,7 +21,7 @@ const MinesweeperSquare = React.memo((props) => {
           key={`${i}-${j}`}
           side={side}
           onClick={() => { props.handleSquareClick(i, j) }}
-          onContextMenu={(e) => { e.preventDefault(); props.handleSquareRightClick(i, j) }}
+          onContextMenu={(e) => { e.preventDefault(); if (props.handleSquareRightClick) props.handleSquareRightClick(i, j) }}
         >{props.gameGrid[i][j]}
         </MinesweeperCell>)
     }

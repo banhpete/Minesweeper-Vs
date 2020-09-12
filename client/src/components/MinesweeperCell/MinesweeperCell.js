@@ -50,8 +50,7 @@ const MinesweeperCell = (props) => {
       className={`${MinesweepercellStyles.Cell} ${MinesweepercellStyles.Flag}`}
       style={{ height: props.side, width: props.side }}
       onClick={props.onClick}
-      onContextMenu={props.onContextMenu}
-      f
+      onContextMenu={props.onContextMenu && props.onContextMenu}
     >
     </div>
   } else {
