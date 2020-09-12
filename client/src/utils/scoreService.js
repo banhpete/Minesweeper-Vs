@@ -2,7 +2,7 @@ import { tokenGet } from './tokenServices'
 const BASE_URL = "/scores"
 
 async function submitScore(time, difficulty, gridId) {
-  const response = await fetch(BASE_URL, {
+  await fetch(BASE_URL, {
     method: "POST",
     headers: {
       'Authorization': "Bearer " + tokenGet(),
@@ -14,7 +14,6 @@ async function submitScore(time, difficulty, gridId) {
       gridId
     })
   })
-  const responseData = await response.json()
 }
 
 async function listScores(diff) {

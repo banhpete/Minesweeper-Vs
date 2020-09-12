@@ -15,7 +15,7 @@ class UserContextProvider extends React.Component {
     this.setState({ username: "" })
   }
 
-  saveTime = (time, difficulty, gridId) => {
+  saveGridData = (time, difficulty, gridId) => {
     this.setState({
       time,
       difficulty,
@@ -23,9 +23,23 @@ class UserContextProvider extends React.Component {
     })
   }
 
+  removeGridData = (cb) => {
+    this.setState({
+      time: 0,
+      difficulty: '',
+      gridId: ''
+    }, cb())
+  }
+
   render() {
     return (
-      <UserContext.Provider value={{ ...this.state, userLogoff: this.userLogoff, userLogin: this.userLogin, saveTime: this.saveTime }}>
+      <UserContext.Provider value={{
+        ...this.state,
+        userLogoff: this.userLogoff,
+        userLogin: this.userLogin,
+        saveGridData: this.saveGridData,
+        removeGridData: this.removeGridData
+      }}>
         {this.props.children}
       </UserContext.Provider>
     );

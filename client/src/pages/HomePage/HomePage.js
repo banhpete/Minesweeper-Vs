@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom'
 import HomePageStyles from './HomePage.module.css'
 import Button from "../../components/Button/Button"
-import SpecialButton from '../../components/SpecialButton/SpecialButton';
 import GameTitle from '../../components/GameTitle/GameTitle';
 import { UserContext } from '../../contexts/UserContext';
 import { SocketContext } from '../../contexts/SocketContext';
@@ -69,60 +68,6 @@ const HomePage = (props) => {
           style={{ height: 50, width: 300, margin: 10, fontSize: 18 }}
           loading={loading}>Minehunter (2P)
         </Button>
-        {/* <SpecialButton
-          height={50}
-          width={300}
-          margin={8}
-          fontSize={18}
-          secondaryHeight={80}
-          menuToggle={specialButtonsState[0]}
-          index={0}
-          changeButtonState={changeButtonState}
-          loading={loading}
-          components={
-            <>
-              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Random Player</Button>
-              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Friend</Button>
-            </>
-          }>
-          Time Race Minesweeper (2P)
-        </SpecialButton>
-        <SpecialButton
-          height={50}
-          width={300}
-          margin={8}
-          fontSize={18}
-          secondaryHeight={80}
-          menuToggle={specialButtonsState[1]}
-          index={1}
-          changeButtonState={changeButtonState}
-          loading={loading}
-          components={
-            <>
-              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Random Player</Button>
-              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Friend</Button>
-            </>
-          }>
-          Minehunter (2P)
-        </SpecialButton>
-        <SpecialButton
-          height={50}
-          width={300}
-          margin={8}
-          fontSize={18}
-          secondaryHeight={80}
-          menuToggle={specialButtonsState[2]}
-          index={2}
-          changeButtonState={changeButtonState}
-          loading={loading}
-          components={
-            <>
-              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Random Player</Button>
-              <Button style={{ height: 35, width: 175, margin: 'auto', fontSize: 13.33 }}>Challenge Friend</Button>
-            </>
-          }>
-          Minehunter Galore (2P)
-        </SpecialButton> */}
       </div>
       {popupMenuState &&
         <PopupMenu onClick={() => togglePopupMenu(!popupMenuState)} gameMode={gameMode} history={props.history} />}

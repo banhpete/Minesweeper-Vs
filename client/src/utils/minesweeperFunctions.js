@@ -210,36 +210,34 @@ function gameMasterGen() {
   }
 
   /* ---- Test Function Only for Development ------------------------------------------------------------------------------------------------ */
-  if (process.env.NODE_ENV === 'development') {
-    var gridTest = (arr) => {
-      let errorFound = false;
-      for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < arr[0].length; j++) {
-          if (arr[i][j] > 0) {
-            let count = 0;
-            checkSurroundings(i, j, (i2, j2) => {
-              if (arr[i2][j2] === -1) {
-                count++
-              }
-            })
-            if (arr[i][j] !== count) {
-              errorFound = true;
-              console.log(`Error at ${i} ${j}`)
-            }
-          } else if (arr[i][j] === -1) {
-            checkSurroundings(i, j, (i2, j2) => {
-              if (arr[i2][j2] === 0) {
-                errorFound = true
-                console.log(`Error at ${i} ${j}`)
-              }
-            })
-          }
-        }
-      }
-      if (errorFound) console.log("There was an error");
-      else console.log("No Error")
-    }
-  }
+  // var gridTest = (arr) => {
+  //   let errorFound = false;
+  //   for (let i = 0; i < arr.length; i++) {
+  //     for (let j = 0; j < arr[0].length; j++) {
+  //       if (arr[i][j] > 0) {
+  //         let count = 0;
+  //         checkSurroundings(i, j, (i2, j2) => {
+  //           if (arr[i2][j2] === -1) {
+  //             count++
+  //           }
+  //         })
+  //         if (arr[i][j] !== count) {
+  //           errorFound = true;
+  //           console.log(`Error at ${i} ${j}`)
+  //         }
+  //       } else if (arr[i][j] === -1) {
+  //         checkSurroundings(i, j, (i2, j2) => {
+  //           if (arr[i2][j2] === 0) {
+  //             errorFound = true
+  //             console.log(`Error at ${i} ${j}`)
+  //           }
+  //         })
+  //       }
+  //     }
+  //   }
+  //   if (errorFound) console.log("There was an error");
+  //   else console.log("No Error")
+  // }
 
   return { provideGameGrid, provideNumOfMines, provideGameEnd, providePlayerWinStatus, provideDiff, provideTime, provideGridId, cellClick, cellRightClick, gridGen }
 }

@@ -42,7 +42,7 @@ const MinesweeperSquare = React.memo((props) => {
 
     window.addEventListener('resize', testResize);
     return () => { window.removeEventListener('resize', testResize) }
-  })
+  }, [mobileStatus])
 
   return (
     <div className={MinesweeperSquareStyles.Square}>

@@ -5,9 +5,7 @@ import MinesweeperSquare from '../../../components/MinesweeperSquare/Minesweeper
 import GameTitle from '../../../components/GameTitle/GameTitle';
 import MinesweeperSquareHeader from '../../../components/MinesweeperSquareHeader/MinesweeperSquareHeader';
 import MinesweeperSquarePopUp from '../../../components/MinesweeperSquarePopUp/MinesweeperSquarePopUp';
-import Button from '../../../components/Button/Button'
 import { SocketContext } from '../../../contexts/SocketContext'
-import { submitScore } from '../../../utils/scoreService'
 import gameMasterGen from "../../../utils/minehunterFunctions"
 
 class MinehunterPage extends Component {
