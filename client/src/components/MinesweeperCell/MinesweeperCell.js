@@ -33,7 +33,6 @@ const MinesweeperCell = (props) => {
         onClick={props.onClick}
         onContextMenu={props.onContextMenu}
         className={`${MinesweepercellStyles.Cell} ${MinesweepercellStyles.Mine}`}>
-        {props.children}
       </div>
   } else if (props.children > 0) {
     cell =

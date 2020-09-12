@@ -9,17 +9,20 @@
 }
 
 .Cell:hover{
-  color:white;
-  background:red;
-  cursor:pointer;
+  cursor: pointer;
+}
+
+.Cell:active{
+  background:#686767;
 }
 
 .Mine{
-  background:red;
+  background-image: url('./redmine.png');
+  background-size: cover;
 }
 
 .Flag{
-  background-image: url('./flag.png');
+  background-image: url('./flag2.png');
   background-size: cover;
   border-width:5px;
   border-style:solid;
@@ -31,6 +34,10 @@
   border-width:5px;
   border-style:solid;
   border-color: #ffffff #7d7d7d #7d7d7d #ffffff;
+}
+
+.Unopened:hover{
+  background:#8a8888;
 }
 
 .Opened{
