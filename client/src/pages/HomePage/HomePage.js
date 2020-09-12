@@ -8,7 +8,7 @@ import { UserContext } from '../../contexts/UserContext';
 import { SocketContext } from '../../contexts/SocketContext';
 import PopupMenu from '../../components/PopupMenu/PopupMenu';
 
-const HomePage = () => {
+const HomePage = (props) => {
   const [specialButtonsState, setSpecialButtonsState] = useState([false, false, false])
   const [loading, setLoading] = useState(false)
   const [userMsg, setUserMsg] = useState("Currently Playing as Anonymous Mine Sweeper")
@@ -124,7 +124,8 @@ const HomePage = () => {
           Minehunter Galore (2P)
         </SpecialButton> */}
       </div>
-      {popupMenuState && <PopupMenu onClick={() => togglePopupMenu(!popupMenuState)} gameMode={gameMode} />}
+      {popupMenuState &&
+        <PopupMenu onClick={() => togglePopupMenu(!popupMenuState)} gameMode={gameMode} history={props.history} />}
     </div>
   );
 }

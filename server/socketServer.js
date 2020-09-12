@@ -28,6 +28,15 @@ io.on('connect', (socket) => {
     }
   })
 
+  // Handle checking room
+  socket.on('check-room', (roomId, cb) => {
+    if (!io.sockets.adapter.rooms[roomId]) {
+      cb(false)
+    } else {
+      cb(true)
+    }
+  })
+
   // Handle player leaving room
   socket.on('leave-room', (roomId, cb) => {
     socket.leave(roomId);

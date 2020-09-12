@@ -86,6 +86,10 @@ class SocketContextProvider extends Component {
     })
   }
 
+  checkRoom = (roomId, cb) => {
+    socket.emit('check-room', roomId, cb)
+  }
+
   leaveRoom = () => {
     socket.emit('leave-room', this.state.roomId, () => {
       this.setState({
@@ -143,6 +147,7 @@ class SocketContextProvider extends Component {
       <SocketContext.Provider value={{
         ...this.state,
         joinRoom: this.joinRoom,
+        checkRoom: this.checkRoom,
         leaveRoom: this.leaveRoom,
         newGrid: this.newGrid,
         removeGrid: this.removeGrid,

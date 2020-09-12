@@ -24,7 +24,7 @@ function App() {
               <Route exact path="/user/create" render={(props) => (!userGet() ? <UserCreatePage {...props} /> : <HomePage />)} />
               <Route exact path="/game/classic" render={(props) => <ClassicGamePage {...props} />} />
               <Route exact path="/game/minehunter" render={(props) => <MinehunterPage {...props} />} />
-              <Route path="/" render={(props) => <HomePage />} />
+              <Route path="/" render={(props) => <HomePage {...props} />} />
             </Switch>
           </div>
           <Footer />
