@@ -19,6 +19,8 @@ const MinesweeperSquarePopUp = (props) => {
   }, [])
 
   var popUpContent = null;
+
+  // Single Player Display
   if (props.playerWinStatus) {
     if (user.username) {
       popUpContent = <h3 key={'scoreSubmitted'} className={MinesweeperSquarePopUpStyles.PopupTxt}>You Won! Your score was submitted</h3>
@@ -30,8 +32,14 @@ const MinesweeperSquarePopUp = (props) => {
       </div>
       ]
     }
-  } else {
+  } else if (props.playerWinStatus === false) {
     popUpContent = <h3 className={MinesweeperSquarePopUpStyles.PopupTxt}>You Lost! Try Again!</h3>
+  }
+
+  // Minehunter Display
+  if (props.gameScores) {
+    let playerWon = props.gameScores['player1'] > props.gameScores['player2'] ? 'Player 1' : 'Player 2'
+    popUpContent = popUpContent = <h3 className={MinesweeperSquarePopUpStyles.PopupTxt}>{playerWon} Won!</h3>
   }
 
   return (
