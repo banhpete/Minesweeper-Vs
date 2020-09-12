@@ -5,15 +5,33 @@ import Timer from '../Timer/Timer';
 
 const MinesweeperSquareHeader = React.memo((props) => {
 
+  let leftCorner = null;
+  let rightCorner = null;
+
+  if (props.gameScores) {
+    leftCorner = <p>P1 Mines: {props.gameScores['player1']}</p>
+    rightCorner = <p>P2 Mines: {props.gameScores['player2']}</p>
+  } else {
+    leftCorner = <p>Mines: {props.mines}</p>
+    rightCorner = <Timer time={props.time} timeStatus={props.timeStatus} />
+  }
+
   return (
     <div className={MinesweeperSquareHeaderStyles.Header}>
-      <p>Mines: {props.mines}</p>
+      {leftCorner}
       <Button onClick={props.handleReset}>
         Reset
       </Button>
-      <Timer time={props.time} timeStatus={props.timeStatus} />
+      {rightCorner}
     </div>
   );
-})
+}, checkProps)
+
+function checkProps(prevProps, nextProps) {
+  if (nextProps.gameScores || nextProps.timeStatus != prevProps.timeStatus) {
+    return false;
+  }
+  return true
+}
 
 export default MinesweeperSquareHeader;

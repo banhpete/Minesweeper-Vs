@@ -120,13 +120,6 @@ class MinehunterPage extends Component {
     })
   }
 
-  // handleDisplayScores = () => {
-  //   console.log('hello! You clicked me')
-  //   this.setState({
-  //     displayScores: !this.state.displayScores
-  //   })
-  // }
-
   loadRow = () => {
     if (this.context.gameStart) {
       if (this.context.player === "player1") {
@@ -173,7 +166,7 @@ class MinehunterPage extends Component {
           <div className={MinehunterPageStyles.SquareContainer}>
             <MinesweeperSquareHeader
               handleReset={this.handleReset}
-              mines={this.gameMaster.provideScore(this.context.player)}
+              gameScores={this.gameMaster.provideScore()}
             />
             <MinesweeperSquare
               forceGridUpdate={this.state.forceGridUpdate}
@@ -190,33 +183,6 @@ class MinehunterPage extends Component {
             gameScores={this.gameMaster.provideScore()}
           />
         }
-
-        {/* {(this.gameMaster.provideDiff() && !this.state.displayScores) &&
-          <>
-            <div className={MinehunterPageStyles.SquareContainer}>
-              <MinesweeperSquareHeader
-                timeStatus={this.state.timeStatus}
-                time={this.gameMaster.provideTime()}
-                handleReset={this.handleReset}
-                mines={this.gameMaster.provideNumOfMines()}
-              />
-              <MinesweeperSquare
-                forceGridUpdate={this.state.forceGridUpdate}
-                handleSquareClick={this.handleSquareClick}
-                handleSquareRightClick={this.handleSquareRightClick}
-                diff={this.gameMaster.provideDiff()}
-                gameGrid={this.gameMaster.provideGameGrid()}
-              />
-            </div>
-
-            {this.gameMaster.provideGameEnd() &&
-              <MinesweeperSquarePopUp
-                playerWinStatus={this.gameMaster.providePlayerWinStatus()}
-                time={this.gameMaster.provideTime()}
-                diff={this.gameMaster.provideDiff()}
-                gridId={this.gameMaster.provideGridId()}
-              />}
-          </>} */}
       </div>
     );
   }
