@@ -67,7 +67,7 @@ const HomePage = (props) => {
         <Button
           onClick={() => { setGameMode('Minehunter'); togglePopupMenu(!popupMenuState) }}
           style={{ height: 50, width: 300, margin: 10, fontSize: 18 }}
-          loading={loading}>Minehunter (2P) - WIP
+          loading={loading}>Minehunter (2P)
         </Button>
         {/* <SpecialButton
           height={50}
