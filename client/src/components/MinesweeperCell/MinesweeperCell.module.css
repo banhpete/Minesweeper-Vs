@@ -1,7 +1,8 @@
 .Cell{
   box-sizing: border-box;
-  border:1px solid black;
+  border:1px solid #767676;
   font-size:20px;
+  font-family:'Press Start 2P';
   display:flex;
   justify-content: center;
   align-items: center;
@@ -17,10 +18,21 @@
   background:red;
 }
 
-.Unopened{
-  background:rgb(136, 136, 136);
+.Flag{
+  background-image: url('./flag.png');
+  background-size: cover;
   border-width:5px;
   border-style:solid;
-  border-color: rgb(220, 220, 220) rgb(51, 51, 51) rgb(51, 51, 51) rgb(220, 220, 220);
+  border-color: #ffffff #7d7d7d #7d7d7d #ffffff;
+}
 
+.Unopened{
+  background:#c0c0c0;
+  border-width:5px;
+  border-style:solid;
+  border-color: #ffffff #7d7d7d #7d7d7d #ffffff;
+}
+
+.Opened{
+  background:#c0c0bd;
 }
