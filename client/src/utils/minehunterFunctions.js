@@ -22,7 +22,7 @@ function gameMasterGen() {
   var playerWin = false;
   var diff;
   var gridId;
-  var gameScore = { player1: 0, player2: 0 };
+  var gameScores = { player1: 0, player2: 0 };
 
   /* ---- Private Functions ------------------------------------------------------------------------------------------------ */
   // Function to check surrounding area of one cell and run function at each cell. Used as part of different functions.
@@ -54,7 +54,7 @@ function gameMasterGen() {
 
   // Logic to check if player won or not
   function didPlayerWin() {
-    if (gameScore['player1'] === (numOfMines / 2) || gameScore['player2'] === (numOfMines / 2)) {
+    if (gameScores['player1'] === (numOfMines / 2) || gameScores['player2'] === (numOfMines / 2)) {
       gameEnd = true;
     }
   }
@@ -109,7 +109,7 @@ function gameMasterGen() {
     if (!gameEnd && gameGrid[y][x] === "") {
       if (valueGrid[y][x] === -1) {
         gameGrid[y][x] = valueGrid[y][x]
-        gameScore[player] += 1;
+        gameScores[player] += 1;
         cb(true);
         didPlayerWin()
         return
@@ -147,7 +147,7 @@ function gameMasterGen() {
       diff = newDiff;
       numOfMines = gameSettings[diff].numOfMines;
     }
-    gameScore = { player1: 0, player2: 0 };
+    gameScores = { player1: 0, player2: 0 };
     const response = await fetch(BASE_URL, {
       method: 'POST',
       headers: {
@@ -174,7 +174,7 @@ function gameMasterGen() {
     diff = newDiff;
     numOfMines = gameSettings[diff].numOfMines;
     gameGrid = [];
-    gameScore = { player1: 0, player2: 0 };
+    gameScores = { player1: 0, player2: 0 };
     for (let i = 0; i < valueGrid.length; i++) {
       let gameGridRow = [];
       for (let j = 0; j < valueGrid[0].length; j++) {
@@ -208,8 +208,11 @@ function gameMasterGen() {
     return gridId
   }
 
-  function provideScore(player) {
-    return gameScore[player]
+  function provideScore(player = null) {
+    if (player) {
+      return gameScores[player]
+    }
+    return gameScores
   }
 
   /* ---- Test Function Only for Development ------------------------------------------------------------------------------------------------ */

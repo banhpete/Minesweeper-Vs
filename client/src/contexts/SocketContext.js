@@ -15,6 +15,7 @@ class SocketContextProvider extends Component {
     player: '',
     playerTurn: '',
     prevClick: null,
+    gameReset: false,
 
     tempGrid: [],
     tempDiff: ''
@@ -69,10 +70,10 @@ class SocketContextProvider extends Component {
 
     // End game cause player disconnect or closes window
     socket.on('player-end-game', () => {
-      console.log('game ended');
       this.setState({
         player: 'player1',
-        gameStart: false
+        gameStart: false,
+        gameReset: true
       })
     })
 
@@ -137,6 +138,12 @@ class SocketContextProvider extends Component {
     })
   }
 
+  gameDCReset = () => {
+    this.setState({
+      gameReset: false //Set back to false after we have removed the grid. GameReset is technically misleading, by this point the game has resetted already.
+    })
+  }
+
   /* ---- Render Provider ------------------------------------------------------------------------------------------------ */
   render() {
     return (
@@ -147,7 +154,8 @@ class SocketContextProvider extends Component {
         newGrid: this.newGrid,
         removeGrid: this.removeGrid,
         cellClick: this.cellClick,
-        removeClick: this.removeClick
+        removeClick: this.removeClick,
+        gameDCReset: this.gameDCReset
       }}>
         {this.props.children}
       </SocketContext.Provider>

@@ -64,6 +64,11 @@ class MinehunterPage extends Component {
         })
       });
     }
+
+    if (this.context.gameReset) {
+      this.gameMaster = gameMasterGen();
+      this.context.gameDCReset()
+    }
   }
 
   /* ---- Event Methods ------------------------------------------------------------------------------------------------ */
@@ -180,6 +185,12 @@ class MinehunterPage extends Component {
           </div>
         }
 
+        {(this.gameMaster.provideGameEnd() && this.context.gameStart) &&
+          <MinesweeperSquarePopUp
+            gameScores={this.gameMaster.provideScore()}
+          />
+        }
+
         {/* {(this.gameMaster.provideDiff() && !this.state.displayScores) &&
           <>
             <div className={MinehunterPageStyles.SquareContainer}>
@@ -197,7 +208,7 @@ class MinehunterPage extends Component {
                 gameGrid={this.gameMaster.provideGameGrid()}
               />
             </div>
-            <p>{this.context.roomId}</p>
+
             {this.gameMaster.provideGameEnd() &&
               <MinesweeperSquarePopUp
                 playerWinStatus={this.gameMaster.providePlayerWinStatus()}
