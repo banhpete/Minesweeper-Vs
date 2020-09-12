@@ -38,8 +38,6 @@ io.on('connect', (socket) => {
 
   // Handle new grid
   socket.on('new-grid', (roomId, grid, diff) => {
-    console.log(roomId)
-    console.log(io.sockets.adapter.rooms[roomId]);
     socket.in(roomId).emit('new-grid', grid, diff)
   })
 

@@ -19,7 +19,7 @@ const PopupMenu = (props) => {
         <h4 className={PopupMenuStyles.SubTitle}>OR</h4>
         <div className={PopupMenuStyles.Row}>
           <Link to={`/game/${props.gameMode}?roomid=${roomId}`}><Button style={{ margin: '15px 5px', height: 25, display: 'inline-block' }}>Join Room</Button></Link>
-          <Input onChange={(e) => { console.log('hi'); setRoomId(e.target.value) }} style={{ width: 100, height: 25, margin: '15px 5px', display: 'inline-block' }}></Input>
+          <Input onChange={(e) => { setRoomId(e.target.value) }} style={{ width: 100, height: 25, margin: '15px 5px', display: 'inline-block' }}></Input>
         </div>
         <h4 onClick={props.onClick} className={PopupMenuStyles.Cancel}>X</h4>
       </div>

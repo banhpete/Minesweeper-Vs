@@ -84,7 +84,6 @@ class ClassicGamePage extends Component {
   }
 
   handleDisplayScores = () => {
-    console.log('hello! You clicked me')
     this.setState({
       displayScores: !this.state.displayScores
     })

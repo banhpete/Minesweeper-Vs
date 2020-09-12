@@ -35,7 +35,6 @@ class SocketContextProvider extends Component {
 
     // Starting game
     socket.on('start-game', () => {
-      console.log('game started')
       this.setState({
         gameStart: true
       })
@@ -43,7 +42,6 @@ class SocketContextProvider extends Component {
 
     // Receiving new grid
     socket.on('new-grid', (grid, diff) => {
-      console.log(grid)
       this.setState({
         tempGrid: grid,
         tempDiff: diff,
@@ -53,7 +51,6 @@ class SocketContextProvider extends Component {
 
     // Receiving cell click
     socket.on('cell-click', (i, j, playerContinue) => {
-      console.log('cell clicked:', i, j)
       let nextPlayerTurn = this.state.playerTurn;
       if (!playerContinue) {
         if (this.state.playerTurn === 'player1') {
@@ -81,9 +78,7 @@ class SocketContextProvider extends Component {
 
   /* ---- Socket Event Emitters ------------------------------------------------------------------------------------------------ */
   joinRoom = (roomId, player) => {
-    console.log('Trying to set')
     socket.emit('join-room', roomId, (player) => {
-      console.log('acknowledged')
       this.setState({
         roomId,
         player
@@ -92,9 +87,7 @@ class SocketContextProvider extends Component {
   }
 
   leaveRoom = () => {
-    console.log('Trying to leave')
     socket.emit('leave-room', this.state.roomId, () => {
-      console.log('acknowledged')
       this.setState({
         roomId: '',
         player: '',
