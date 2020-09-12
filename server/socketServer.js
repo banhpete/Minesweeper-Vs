@@ -31,9 +31,11 @@ io.on('connect', (socket) => {
   // Handle checking room
   socket.on('check-room', (roomId, cb) => {
     if (!io.sockets.adapter.rooms[roomId]) {
-      cb(false)
+      cb('Room not available')
+    } else if (io.sockets.adapter.rooms[roomId].length >= 2) {
+      cb('Room is full')
     } else {
-      cb(true)
+      cb(false)
     }
   })
 

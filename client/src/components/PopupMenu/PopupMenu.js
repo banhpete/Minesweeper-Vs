@@ -20,11 +20,11 @@ const PopupMenu = (props) => {
     if (roomId.length > 4 || roomId.length < 4) {
       setErrMsg('Invalid Room ID')
     } else {
-      context.checkRoom(roomId, (roomOpen) => {
-        if (roomOpen) {
+      context.checkRoom(roomId, (errMsg) => {
+        if (!errMsg) {
           props.history.push(`/game/${props.gameMode}?roomid=${roomId}`)
         } else {
-          setErrMsg('No one is in that room')
+          setErrMsg(errMsg)
         }
       })
     }
