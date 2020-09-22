@@ -17,6 +17,7 @@ const MinesweeperSquare = React.memo((props) => {
     for (let j = 0; j < props.gameGrid[0].length; j++) {
       Cells.push(
         <MinesweeperCell
+          lastClick={props.lastClick}
           index={`${i}-${j}`}
           key={`${i}-${j}`}
           side={side}

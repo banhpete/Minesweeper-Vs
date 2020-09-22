@@ -12,7 +12,8 @@ class MinehunterPage extends Component {
   state = {
     forceGridUpdate: false, // As a result of hidden state we need to use a state and pass down to children to force updates
     msg: "",
-    displayScores: true
+    displayScores: true,
+    lastClick: [0, 0]
   }
 
   /* ---- Hidden State ------------------------------------------------------------------------------------------------ */
@@ -83,10 +84,12 @@ class MinehunterPage extends Component {
         if (this.gameMaster.provideGameEnd()) {
           this.setState({
             //Time stop
+            lastClick: [i, j],
             forceGridUpdate: !this.state.forceGridUpdate
           })
         } else {
           this.setState({
+            lastClick: [i, j],
             forceGridUpdate: !this.state.forceGridUpdate
           })
         }
@@ -160,6 +163,7 @@ class MinehunterPage extends Component {
               gameScores={this.gameMaster.provideScore()}
             />
             <MinesweeperSquare
+              lastClick={this.state.lastClick}
               forceGridUpdate={this.state.forceGridUpdate}
               handleSquareClick={this.handleSquareClick}
               handleSquareRightClick={this.handleSquareRightClick}

@@ -34,6 +34,7 @@
   border-width:5px;
   border-style:solid;
   border-color: #ffffff #7d7d7d #7d7d7d #ffffff;
+  color:rgba(0,0,0,0)
 }
 
 .Unopened:hover{
@@ -42,4 +43,21 @@
 
 .Opened{
   background:#c0c0bd;
+  animation-name:shake2;
+  animation-duration:150ms;
+  animation-iteration-count:1;
+}
+
+@keyframes shake2 {
+
+  10% { transform: translate(-1px, -2px) rotate(-2deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+
+  40% { transform: translate(2px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-2deg); }
+
+  75% { transform: translate(3px, 2px) rotate(-1deg); }
+
+  95% { transform: translate(1px, 2px) rotate(0deg); }
+
 }

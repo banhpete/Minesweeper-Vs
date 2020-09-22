@@ -16,7 +16,8 @@ class ClassicGamePage extends Component {
     forceGridUpdate: false, // As a result of hidden state we need to use a state and pass down to children to force updates
     timeStatus: "stop",
     msg: "",
-    displayScores: true
+    displayScores: true,
+    lastClick: [0, 0]
   }
 
   static contextType = UserContext
@@ -62,6 +63,7 @@ class ClassicGamePage extends Component {
         })
       } else {
         this.setState({
+          lastClick: [i, j],
           forceGridUpdate: !this.state.forceGridUpdate
         })
       }
@@ -120,6 +122,7 @@ class ClassicGamePage extends Component {
                 mines={this.gameMaster.provideNumOfMines()}
               />
               <MinesweeperSquare
+                lastClick={this.state.lastClick}
                 forceGridUpdate={this.state.forceGridUpdate}
                 handleSquareClick={this.handleSquareClick}
                 handleSquareRightClick={this.handleSquareRightClick}
