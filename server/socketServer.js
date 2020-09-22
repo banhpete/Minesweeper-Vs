@@ -52,6 +52,11 @@ io.on('connect', (socket) => {
     socket.in(roomId).emit('new-grid', grid, diff)
   })
 
+  // Handle cell enter
+  socket.on('cell-enter', (i, j, roomId) => {
+    socket.in(roomId).emit('cell-enter', i, j)
+  })
+
   // Handle cell click
   socket.on('cell-click', (roomId, i, j, playerContinue) => {
     socket.in(roomId).emit('cell-click', i, j, playerContinue)

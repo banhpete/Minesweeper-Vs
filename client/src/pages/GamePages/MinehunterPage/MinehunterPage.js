@@ -97,13 +97,14 @@ class MinehunterPage extends Component {
     }
   }
 
-  // handleSquareRightClick = (i, j) => {
-  //   this.gameMaster.cellRightClick(i, j, () => {
-  //     this.setState({
-  //       forceGridUpdate: !this.state.forceGridUpdate
-  //     })
-  //   })
-  // }
+  throttleTracker = false;
+  handleCellEnter = (i, j) => {
+    if (!this.throttleTracker) {
+      this.context.cellEnter(i, j);
+      this.throttletracker = true;
+      setInterval(() => { this.throttleTracker = false }, 300)
+    }
+  }
 
   handleReset = () => {
     this.gameMaster.gridGen(false, (grid, diff) => {
@@ -163,8 +164,11 @@ class MinehunterPage extends Component {
               gameScores={this.gameMaster.provideScore()}
             />
             <MinesweeperSquare
+              player={this.context.player}
+              otherPlayerPosition={this.context.otherPlayerPosition}
               lastClick={this.state.lastClick}
               forceGridUpdate={this.state.forceGridUpdate}
+              handleCellEnter={this.handleCellEnter}
               handleSquareClick={this.handleSquareClick}
               handleSquareRightClick={this.handleSquareRightClick}
               diff={this.gameMaster.provideDiff()}

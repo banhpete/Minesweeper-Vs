@@ -16,6 +16,7 @@ class SocketContextProvider extends Component {
     playerTurn: '',
     prevClick: null,
     gameReset: false,
+    otherPlayerPosition: [-1, -1],
 
     tempGrid: [],
     tempDiff: ''
@@ -46,6 +47,13 @@ class SocketContextProvider extends Component {
         tempGrid: grid,
         tempDiff: diff,
         playerTurn: 'player1'
+      })
+    })
+
+    // Receiving cell enter
+    socket.on('cell-enter', (i, j) => {
+      this.setState({
+        otherPlayerPosition: [i, j]
       })
     })
 
@@ -114,6 +122,10 @@ class SocketContextProvider extends Component {
     })
   }
 
+  cellEnter = (i, j) => {
+    socket.emit('cell-enter', i, j, this.state.roomId)
+  }
+
   cellClick = (i, j, playerContinue) => {
     socket.emit('cell-click', this.state.roomId, i, j, playerContinue);
     if (!playerContinue) {
@@ -151,6 +163,7 @@ class SocketContextProvider extends Component {
         leaveRoom: this.leaveRoom,
         newGrid: this.newGrid,
         removeGrid: this.removeGrid,
+        cellEnter: this.cellEnter,
         cellClick: this.cellClick,
         removeClick: this.removeClick,
         gameDCReset: this.gameDCReset

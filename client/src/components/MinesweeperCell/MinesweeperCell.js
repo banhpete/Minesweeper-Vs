@@ -16,6 +16,8 @@ const MinesweeperCell = (props) => {
   }
 
   let color = { color: numColours[props.children] }
+  let otherPlayerColor = (props.player === 'player1') ? numColours[2] : numColours[1];
+  let selected = props.otherPlayerEnter ? { boxShadow: 'inset 0px 0px 1px 2px ' + otherPlayerColor } : {};
   let indices = props.index.split('-')
   let animationDelay = Math.max(Math.abs(props.lastClick[0] - indices[0]), Math.abs(props.lastClick[1] - indices[1])) * 40;
   let cell = null
@@ -23,25 +25,26 @@ const MinesweeperCell = (props) => {
     cell =
       <div
         index={props.index}
-        style={{ height: props.side, width: props.side, animationDelay: animationDelay + 'ms' }}
+        style={{ height: props.side, width: props.side, animationDelay: animationDelay + 'ms', ...selected }}
         onClick={props.onClick}
-        onContextMenu={props.onContextMenu}
+        onMouseEnter={props.onMouseEnter}
         className={`${MinesweepercellStyles.Cell} ${MinesweepercellStyles.Opened}`}>
       </div>
   } else if (props.children === -1) {
     cell =
       <div index={props.index}
-        style={{ height: props.side, width: props.side }}
+        style={{ height: props.side, width: props.side, ...selected }}
         onClick={props.onClick}
-        onContextMenu={props.onContextMenu}
+        onMouseEnter={props.onMouseEnter}
         className={`${MinesweepercellStyles.Cell} ${MinesweepercellStyles.Mine}`}>
       </div>
   } else if (props.children > 0) {
     cell =
       <div
         index={props.index}
-        style={{ height: props.side, width: props.side, animationDelay: animationDelay + 'ms' }}
+        style={{ height: props.side, width: props.side, animationDelay: animationDelay + 'ms', ...selected }}
         onClick={props.onClick}
+        onMouseEnter={props.onMouseEnter}
         onContextMenu={props.onContextMenu}
         className={`${MinesweepercellStyles.Cell} ${MinesweepercellStyles.Opened}`}>
         <span style={color}>{props.children}</span>
@@ -50,8 +53,9 @@ const MinesweeperCell = (props) => {
     cell = <div
       index={props.index}
       className={`${MinesweepercellStyles.Cell} ${MinesweepercellStyles.Flag}`}
-      style={{ height: props.side, width: props.side }}
+      style={{ height: props.side, width: props.side, ...selected }}
       onClick={props.onClick}
+      onMouseEnter={(props.onMouseEnter)}
       onContextMenu={props.onContextMenu && props.onContextMenu}
     >
     </div>
@@ -59,8 +63,9 @@ const MinesweeperCell = (props) => {
     cell =
       <div
         index={props.index}
-        style={{ height: props.side, width: props.side }}
+        style={{ height: props.side, width: props.side, ...selected }}
         onClick={props.onClick}
+        onMouseEnter={(props.onMouseEnter)}
         onContextMenu={props.onContextMenu}
         className={`${MinesweepercellStyles.Cell} 
         ${MinesweepercellStyles.Unopened}`}>
