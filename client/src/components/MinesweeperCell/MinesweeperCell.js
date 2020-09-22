@@ -49,7 +49,7 @@ const MinesweeperCell = (props) => {
         className={`${MinesweepercellStyles.Cell} ${MinesweepercellStyles.Opened}`}>
         <span style={color}>{props.children}</span>
       </div>
-  } else if (props.children === 'f') {
+  } else if (props.children === 'f' || props.isflag) {
     cell = <div
       index={props.index}
       className={`${MinesweepercellStyles.Cell} ${MinesweepercellStyles.Flag}`}

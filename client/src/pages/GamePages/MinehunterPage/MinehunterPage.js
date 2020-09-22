@@ -13,7 +13,8 @@ class MinehunterPage extends Component {
     forceGridUpdate: false, // As a result of hidden state we need to use a state and pass down to children to force updates
     msg: "",
     displayScores: true,
-    lastClick: [0, 0]
+    lastClick: [0, 0],
+    flags: {}
   }
 
   /* ---- Hidden State ------------------------------------------------------------------------------------------------ */
@@ -97,6 +98,20 @@ class MinehunterPage extends Component {
     }
   }
 
+  handleSquareRightClick = (i, j) => {
+    if (!this.state.flags[`${i}-${j}`]) {
+      this.setState({
+        flags: { ...this.state.flags, [`${i}-${j}`]: true }
+      })
+    } else {
+      let newflags = { ...this.state.flags };
+      delete newflags[`${i}-${j}`]
+      this.setState({
+        flags: newflags
+      })
+    }
+  }
+
   throttleTracker = false;
   handleCellEnter = (i, j) => {
     if (!this.throttleTracker) {
@@ -116,6 +131,7 @@ class MinehunterPage extends Component {
     })
   }
 
+  /* ---- Render Method ------------------------------------------------------------------------------------------------ */
   loadRow = () => {
     if (this.context.gameStart) {
       if (this.context.player === "player1") {
@@ -177,6 +193,7 @@ class MinehunterPage extends Component {
               gameScores={this.gameMaster.provideScore()}
             />
             <MinesweeperSquare
+              flags={this.state.flags}
               player={this.context.player}
               otherPlayerPosition={this.context.otherPlayerPosition}
               lastClick={this.state.lastClick}
