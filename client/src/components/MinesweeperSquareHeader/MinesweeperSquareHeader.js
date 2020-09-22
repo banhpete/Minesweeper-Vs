@@ -7,10 +7,14 @@ const MinesweeperSquareHeader = React.memo((props) => {
 
   let leftCorner = null;
   let rightCorner = null;
+  let style = {
+    fontWeight: 700,
+    color: props.player === 'player1' ? '#0000ff' : '#008000'
+  }
 
   if (props.gameScores) {
-    leftCorner = <p>P1 Mines: {props.gameScores['player1']}</p>
-    rightCorner = <p>P2 Mines: {props.gameScores['player2']}</p>
+    leftCorner = <p style={props.player === 'player1' ? style : null} >{(props.player === 'player1' ? 'Your Mines: ' : 'P1 Mines: ') + props.gameScores['player1']}</p>
+    rightCorner = <p style={props.player === 'player2' ? style : null}>{(props.player === 'player2' ? 'Your Mines: ' : 'P2 Mines: ') + props.gameScores['player2']}</p>
   } else {
     leftCorner = <p>Mines: {props.mines}</p>
     rightCorner = <Timer time={props.time} timeStatus={props.timeStatus} />

@@ -127,7 +127,12 @@ class MinehunterPage extends Component {
               style={{ display: "block", margin: '15px 5px' }}
               handleChange={this.handleDiffChange}
             />
-            {this.context.playerTurn && <p> - {`${this.context.playerTurn}'s Turn`}</p>}
+            {this.context.playerTurn ?
+              this.context.playerTurn === this.context.player ?
+                <p style={{ fontWeight: 700, color: '#0000ff' }}> - Your Turn </p> :
+                <p > - Player 2's Turn</p> :
+              null
+            }
           </>
         )
       } else {
@@ -135,7 +140,14 @@ class MinehunterPage extends Component {
         if (!diff) {
           return (<p>Waiting for player 1 to select Game Difficulty</p>)
         } else {
-          return (<p>{`${diff} Mode - ${this.context.playerTurn}'s Turn`}</p>)
+          let style = {
+            fontWeight: this.context.playerTurn === 'player2' ? 700 : 400,
+            color: this.context.playerTurn === 'player2' ? '#008000' : '#000000'
+          }
+          return (<p style={style}>{`${diff} Mode - ` +
+            ((this.context.playerTurn === this.context.player) ?
+              'Your Turn' : "Player 1's Turn")
+          }</p>)
         }
       }
     } else {
@@ -160,6 +172,7 @@ class MinehunterPage extends Component {
         {(this.context.gameStart && (this.gameMaster.provideGameGrid().length !== 0)) &&
           <div className={MinehunterPageStyles.SquareContainer}>
             <MinesweeperSquareHeader
+              player={this.context.player}
               handleReset={this.handleReset}
               gameScores={this.gameMaster.provideScore()}
             />
