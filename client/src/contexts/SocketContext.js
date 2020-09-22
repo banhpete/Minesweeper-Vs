@@ -15,7 +15,7 @@ class SocketContextProvider extends Component {
     player: '',
     playerTurn: '',
     prevClick: null,
-    gameReset: false,
+    gameDC: false,
     otherPlayerPosition: [-1, -1],
 
     tempGrid: [],
@@ -78,7 +78,7 @@ class SocketContextProvider extends Component {
       this.setState({
         player: 'player1',
         gameStart: false,
-        gameReset: true
+        gameDC: true
       })
     })
 
@@ -115,11 +115,11 @@ class SocketContextProvider extends Component {
     })
   }
 
-  removeGrid = () => {
+  removeGrid = (cb) => {
     this.setState({
       tempGrid: [],
       tempDiff: ''
-    })
+    }, cb())
   }
 
   cellEnter = (i, j) => {

@@ -46,21 +46,34 @@ class MinehunterPage extends Component {
   componentDidUpdate = () => {
     if (this.context.tempGrid.length !== 0) {
       this.gameMaster.giveGrid(this.context.tempGrid, this.context.tempDiff);
-      this.context.removeGrid();
-    }
-
-    if (this.context.prevClick) {
-      this.gameMaster.cellClick(this.context.prevClick[0], this.context.prevClick[1], this.context.playerTurn, () => {
-        this.context.removeClick()
+      this.context.removeGrid(() => {
         this.setState({
-          //Time stop
-          forceGridUpdate: !this.state.forceGridUpdate
+          flags: {}
         })
       });
     }
 
-    if (this.context.gameReset) {
+    if (this.context.prevClick) {
+      this.gameMaster.cellClick(this.context.prevClick[0], this.context.prevClick[1], this.context.playerTurn, () => {
+        let prevClick = [this.context.prevClick[0], this.context.prevClick[1]]
+        let newflags = { ...this.state.flags };
+        if (this.state.flags[`${this.context.prevClick[0]}-${this.context.prevClick[1]}`]) {
+          delete newflags[`${this.context.prevClick[0]}-${this.context.prevClick[1]}`]
+        }
+        this.context.removeClick()
+        this.setState({
+          lastClick: prevClick,
+          forceGridUpdate: !this.state.forceGridUpdate,
+          flags: newflags
+        })
+      });
+    }
+
+    if (this.context.gameDC) {
       this.gameMaster = gameMasterGen();
+      this.setState({
+        flags: {}
+      })
       this.context.gameDCReset()
     }
   }
@@ -81,7 +94,14 @@ class MinehunterPage extends Component {
   handleSquareClick = (i, j) => {
     if (this.context.playerTurn === this.context.player) {
       this.gameMaster.cellClick(i, j, this.context.player, (playerContinue) => {
-        this.context.cellClick(i, j, playerContinue)
+        this.context.cellClick(i, j, playerContinue);
+        if (this.state.flags[`${i}-${j}`]) {
+          let newflags = { ...this.state.flags };
+          delete newflags[`${i}-${j}`]
+          this.setState({
+            flags: newflags
+          })
+        }
         if (this.gameMaster.provideGameEnd()) {
           this.setState({
             //Time stop
@@ -126,7 +146,8 @@ class MinehunterPage extends Component {
       this.context.newGrid(grid, diff)
       this.setState({
         forceGridUpdate: !this.state.forceGridUpdate,
-        displayScores: false
+        displayScores: false,
+        flags: {}
       })
     })
   }
