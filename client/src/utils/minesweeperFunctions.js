@@ -1,3 +1,4 @@
+import { openCellAudio } from './audioServices'
 const BASE_URL = '/minesweeper'
 
 function gameMasterGen() {
@@ -112,12 +113,16 @@ function gameMasterGen() {
 
   /* ---- Public Functions ------------------------------------------------------------------------------------------------ */
   function cellClick(y, x, cb) {
+
     if (!gameStartTime) {
       gameStartTime = Date.now();
       moveMines(y, x);
       saveId();
     }
     if (!gameEnd && gameGrid[y][x] === "") {
+
+      openCellAudio();
+
       if (valueGrid[y][x] === -1) {
         gameEnd = true;
         gameEndTime = Date.now();

@@ -1,3 +1,4 @@
+import { openCellAudio } from './audioServices'
 const BASE_URL = '/minesweeper'
 
 function gameMasterGen() {
@@ -64,6 +65,9 @@ function gameMasterGen() {
   /* ---- Public Functions ------------------------------------------------------------------------------------------------ */
   function cellClick(y, x, player, cb) {
     if (!gameEnd && gameGrid[y][x] === "") {
+
+      openCellAudio();
+
       if (valueGrid[y][x] === -1) {
         gameGrid[y][x] = valueGrid[y][x]
         gameScores[player] += 1;
