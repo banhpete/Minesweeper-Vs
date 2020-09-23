@@ -1,0 +1,43 @@
+.Container{
+  background:black;
+  color:white;
+  height:100%;
+  width:100%;
+  display:flex;
+  flex-direction: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.Container p{
+  margin: 0;
+  padding: 0
+}
+
+.Square {
+  position:relative;
+  left:-50px;
+  top:20px;
+  width: 30px;
+  height: 30px;
+  background-color:  #767676;
+  border-width:4px;
+  border-style:solid;
+  border-color: #ffffff #414141 #414141 #ffffff;
+}
+
+.Load .Square {
+  animation: loading 3s cubic-bezier(0.17, 0.37, 0.43, 0.67) infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(135px, 0) rotate(360deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
