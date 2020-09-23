@@ -3,6 +3,7 @@
   border:1px solid #767676;
   font-size:20px;
   font-family:'Press Start 2P';
+  font-display: swap;
   display:flex;
   justify-content: center;
   align-items: center;
