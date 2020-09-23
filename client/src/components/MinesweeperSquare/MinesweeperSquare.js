@@ -17,7 +17,7 @@ const MinesweeperSquare = React.memo((props) => {
     for (let j = 0; j < props.gameGrid[0].length; j++) {
       Cells.push(
         <MinesweeperCell
-          isflag={props.flags[`${i}-${j}`]}
+          isflag={props.flags && props.flags[`${i}-${j}`]}
           player={props.player}
           otherPlayerEnter={(props.otherPlayerPosition && i === props.otherPlayerPosition[0] && j === props.otherPlayerPosition[1])}
           onMouseEnter={props.handleCellEnter ? () => { props.handleCellEnter(i, j) } : null}
