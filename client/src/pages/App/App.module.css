@@ -1,11 +1,11 @@
 .App {
+  overflow-x:'hidden';
   display:flex;
   flex-direction:column;
   justify-content: space-between;
   align-items: center;
   height:100vh;
-  background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('./background.png');
-  background-size: cover;
+  background-color: rgba(0,0,0,0.5)
 }
 
 .displayContainer{

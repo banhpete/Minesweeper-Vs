@@ -7,6 +7,7 @@ import AppStyles from './App.module.css'
 import UserContextProvider from '../../contexts/UserContext';
 import SocketContextProvider from '../../contexts/SocketContext';
 import { userGet } from "../../utils/userServices"
+const Background = lazy(() => import('../../components/Background/Background'))
 const HomePage = lazy(() => import('../HomePage/HomePage'));
 const UserLoginPage = lazy(() => import('../UserPages/UserLoginPage/UserLoginPage'))
 const UserCreatePage = lazy(() => import('../UserPages/UserCreatePage/UserCreatePage'))
@@ -17,6 +18,9 @@ const MinehunterPage = lazy(() => import('../GamePages/MinehunterPage/Minehunter
 function App() {
   return (
     <div className={AppStyles.App}>
+      <Suspense fallback={<div></div>}>
+        <Background />
+      </Suspense>
       <UserContextProvider>
         <SocketContextProvider>
           <Header />
