@@ -7,8 +7,8 @@ const Footer = () => {
   return (
     <div className={FooterStyles.Footer}>
       <p>Made By Peter Banh</p>
-      <a href="https://www.linkedin.com/in/peter-banh/"> <FontAwesomeIcon size='lg' icon={faLinkedin} /></a>
-      <a href="https://github.com/banhpete/Minesweeper-Vs"> <FontAwesomeIcon size='lg' icon={faGithubSquare} /></a>
+      <a href="https://www.linkedin.com/in/peter-banh/"> <p style={{ display: 'none' }}>LinkedIn</p><FontAwesomeIcon size='lg' icon={faLinkedin} /></a>
+      <a href="https://github.com/banhpete/Minesweeper-Vs"> <p style={{ display: 'none' }}>GitHub</p><FontAwesomeIcon size='lg' icon={faGithubSquare} /></a>
     </div>
   );
 }

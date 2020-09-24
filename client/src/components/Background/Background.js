@@ -16,7 +16,7 @@ const Background = () => {
     overflow: 'hidden'
   }
 
-  return (<div style={divStyle}><img style={imgStyle} src={background}></img></div>);
+  return (<div style={divStyle}><img alt="minesweeper vs background image" style={imgStyle} src={background}></img></div>);
 }
 
 export default Background;
