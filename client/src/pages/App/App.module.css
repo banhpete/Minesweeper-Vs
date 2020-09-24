@@ -15,7 +15,7 @@
   border-color: #ffffff #7d7d7d #7d7d7d #ffffff;
   min-width: 50%;
   height:78%;
-  margin: 10px 0 20px 0;
+  margin: 0;
 }
 
 @media(max-height: 800px){
