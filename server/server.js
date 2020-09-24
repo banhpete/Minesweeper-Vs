@@ -6,6 +6,7 @@ const path = require('path')
 const psql = require('./db')
 const session = require('express-session')
 const pgSession = require('connect-pg-simple')(session)
+const compression = require('compression')
 
 // Configurement
 require('dotenv').config()
@@ -28,6 +29,7 @@ app.use(session({
 }));
 app.use(morgan('dev'))
 app.use(express.json())
+app.use(compression())
 app.use(express.static(path.join(__dirname.replace('server', ''), 'client', 'build')))
 
 // Setting Routes
