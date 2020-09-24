@@ -4,7 +4,7 @@ body {
   font-display: swap;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color:#707070
+  color:rgb(43, 41, 41);
 }
 
 a{
